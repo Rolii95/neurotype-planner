@@ -18,10 +18,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install supabase CLI
-        run: npm install -g supabase
-
-      - name: Deploy Supabase Edge Functions
+      - name: Deploy Supabase Edge Functions (via npx)
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -29,14 +26,14 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           cd supabase/functions
-          npx supabase functions deploy ai_proxy
-          npx supabase functions deploy oauth_google
-          npx supabase functions deploy oauth_microsoft
-          npx supabase functions deploy oauth_todoist
-          npx supabase functions deploy task_import_webhook
-          npx supabase functions deploy task-integrations-list
-          npx supabase functions deploy task-integrations-connect
-          npx supabase functions deploy task-integrations-disconnect
-          npx supabase functions deploy task-integrations-register-webhook
-          npx supabase functions deploy task-integrations-sync
-          npx supabase functions deploy task-integrations-import-file
+          npx supabase@latest functions deploy ai_proxy
+          npx supabase@latest functions deploy oauth_google
+          npx supabase@latest functions deploy oauth_microsoft
+          npx supabase@latest functions deploy oauth_todoist
+          npx supabase@latest functions deploy task_import_webhook
+          npx supabase@latest functions deploy task-integrations-list
+          npx supabase@latest functions deploy task-integrations-connect
+          npx supabase@latest functions deploy task-integrations-disconnect
+          npx supabase@latest functions deploy task-integrations-register-webhook
+          npx supabase@latest functions deploy task-integrations-sync
+          npx supabase@latest functions deploy task-integrations-import-file
