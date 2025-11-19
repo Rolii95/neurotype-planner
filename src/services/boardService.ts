@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { notificationService } from './notifications';
 
 export interface Board {
   id: string;
@@ -192,22 +193,64 @@ class BoardService {
         tags: input.tags || [],
       };
 
+
+      // Optimistic notification for creation
+      const pendingNotif = await notificationService.createNotification({
+        title: 'Creating board...',
+        message: `Creating "${input.title}"`,
+        type: 'update',
+        priority: 'low',
+        actionable: false,
+      }).catch(() => null);
+
       const { data: board, error } = await supabase
         .from('boards')
         .insert(boardData)
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        // update notification to error if available
+        if (pendingNotif) {
+          await notificationService.updateNotification(pendingNotif.id, {
+            title: 'Board creation failed',
+            message: error.message || 'Failed to create board',
+            type: 'warning',
+            priority: 'urgent',
+            actionable: false,
+          }).catch((e) => console.warn('Failed to update pending notification:', e));
+        }
+        throw error;
+      }
 
       // Add steps if provided
       if (input.steps && input.steps.length > 0 && board) {
         await this.addStepsToBoard(board.id, input.steps);
       }
 
+      // update notification to success
+      if (pendingNotif) {
+        await notificationService.updateNotification(pendingNotif.id, {
+          title: 'Board created',
+          message: `Created "${board.title}"`,
+          type: 'celebration',
+          priority: 'low',
+        }).catch((e) => console.warn('Failed to update pending notification:', e));
+      }
+
       return board;
     } catch (error) {
       console.error('Error creating board:', error);
+      // show a failure notification if not already created
+      try {
+        await notificationService.createNotification({
+          title: 'Board creation failed',
+          message: error instanceof Error ? error.message : 'Failed to create board',
+          type: 'warning',
+          priority: 'urgent',
+          actionable: false,
+        });
+      } catch (e) { console.warn('Failed to create failure notification:', e); }
       return null;
     }
   }
@@ -253,6 +296,14 @@ class BoardService {
 
   async updateBoard(boardId: string, updates: UpdateBoardInput): Promise<Board | null> {
     try {
+      const pendingNotif = await notificationService.createNotification({
+        title: 'Updating board...',
+        message: `Applying updates`,
+        type: 'update',
+        priority: 'low',
+        actionable: false,
+      }).catch(() => null);
+
       const { data, error } = await supabase
         .from('boards')
         .update(updates)
@@ -260,21 +311,87 @@ class BoardService {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        if (pendingNotif) {
+          await notificationService.updateNotification(pendingNotif.id, {
+            title: 'Board update failed',
+            message: error.message || 'Failed to update board',
+            type: 'warning',
+            priority: 'urgent',
+          }).catch((e) => console.warn('Failed to update pending notification:', e));
+        }
+        throw error;
+      }
+
+      if (pendingNotif) {
+        await notificationService.updateNotification(pendingNotif.id, {
+          title: 'Board updated',
+          message: `Updates applied`,
+          type: 'update',
+          priority: 'low',
+        }).catch(() => null);
+      }
+
       return data;
     } catch (error) {
       console.error('Error updating board:', error);
+      try {
+        await notificationService.createNotification({
+          title: 'Board update failed',
+          message: error instanceof Error ? error.message : 'Failed to update board',
+          type: 'warning',
+          priority: 'urgent',
+          actionable: false,
+        });
+      } catch (e) { console.warn('Failed to create failure notification:', e); }
       return null;
     }
   }
 
   async deleteBoard(boardId: string): Promise<boolean> {
     try {
+      const pendingNotif = await notificationService.createNotification({
+        title: 'Deleting board...',
+        message: `Deleting board`,
+        type: 'update',
+        priority: 'low',
+        actionable: false,
+      }).catch(() => null);
+
       const { error } = await supabase.from('boards').delete().eq('id', boardId);
-      if (error) throw error;
+      if (error) {
+        if (pendingNotif) {
+          await notificationService.updateNotification(pendingNotif.id, {
+            title: 'Delete failed',
+            message: error.message || 'Failed to delete board',
+            type: 'warning',
+            priority: 'urgent',
+          }).catch((e) => console.warn('Failed to update pending notification:', e));
+        }
+        throw error;
+      }
+
+      if (pendingNotif) {
+        await notificationService.updateNotification(pendingNotif.id, {
+          title: 'Board deleted',
+          message: `Board deleted`,
+          type: 'update',
+          priority: 'low',
+        }).catch((e) => console.warn('Failed to update pending notification:', e));
+      }
+
       return true;
     } catch (error) {
       console.error('Error deleting board:', error);
+      try {
+        await notificationService.createNotification({
+          title: 'Delete failed',
+          message: error instanceof Error ? error.message : 'Failed to delete board',
+          type: 'warning',
+          priority: 'urgent',
+          actionable: false,
+        });
+      } catch (e) { console.warn('Failed to create failure notification:', e); }
       return false;
     }
   }

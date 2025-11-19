@@ -578,7 +578,8 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
 
         initializeRealtime: async () => {
           try {
-            await supabaseService.subscribeToTasks((payload) => {
+            // subscribeToTasks may return an unsubscribe function; capture it for deterministic cleanup
+            const maybeUnsub = await supabaseService.subscribeToTasks((payload) => {
               const { eventType, new: newRecord, old: oldRecord } = payload;
 
               set((state) => {
@@ -631,6 +632,14 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
 
               get().updateAnalytics();
             });
+            // store unsubscribe function globally so cleanup() can access it deterministically
+            try {
+              if (typeof window !== 'undefined' && typeof maybeUnsub === 'function') {
+                (window as any).__NTP_REALTIME_UNSUB = maybeUnsub;
+              }
+            } catch (e) {
+              console.warn('Could not store realtime unsubscribe on window:', e);
+            }
 
             set((state) => {
               state.isOnline = true;
@@ -643,7 +652,27 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
         },
 
         cleanup: () => {
-          // Cleanup handled by supabaseService.unsubscribe
+          try {
+            // deterministic cleanup: clear park interval and unsubscribe realtime
+            if (typeof window !== 'undefined') {
+              const globalAny: any = window as any;
+              if (globalAny.__NTP_PARK_INTERVAL) {
+                clearInterval(globalAny.__NTP_PARK_INTERVAL as number);
+                delete globalAny.__NTP_PARK_INTERVAL;
+              }
+              if (globalAny.__NTP_REALTIME_UNSUB) {
+                try {
+                  const unsub = globalAny.__NTP_REALTIME_UNSUB as () => void;
+                  if (typeof unsub === 'function') unsub();
+                } catch (e) {
+                  console.warn('Error while calling realtime unsubscribe:', e);
+                }
+                delete globalAny.__NTP_REALTIME_UNSUB;
+              }
+            }
+          } catch (err) {
+            console.error('Cleanup failed:', err);
+          }
         },
 
         // Analytics
@@ -1215,13 +1244,23 @@ export const getTasksByQuadrant = (quadrantId: QuadrantId) => {
 
 export const initializeMatrixStore = async () => {
   const store = useMatrixStore.getState();
+  // Ensure single initialization
   await store.syncWithSupabase();
   await store.initializeRealtime();
-  // Periodically check parked tasks and notify if parked > 3 days
+
+  // Start deterministic parked-task checker and keep a handle for cleanup
   try {
-    setInterval(() => {
-      store.checkParkedTasksAndNotify().catch((err) => console.error('Park check failed:', err));
-    }, 1000 * 60 * 60); // every hour
+    // Clear previous interval if any (defensive)
+    if (typeof window !== 'undefined') {
+      // store interval id on the store object to enable deterministic cleanup
+      const globalAny: any = window as any;
+      if (globalAny.__NTP_PARK_INTERVAL) {
+        clearInterval(globalAny.__NTP_PARK_INTERVAL as number);
+      }
+      globalAny.__NTP_PARK_INTERVAL = window.setInterval(() => {
+        store.checkParkedTasksAndNotify().catch((err) => console.error('Park check failed:', err));
+      }, 1000 * 60 * 60); // every hour
+    }
   } catch (err) {
     console.error('Failed to start parked task checker:', err);
   }
