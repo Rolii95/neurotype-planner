@@ -5,9 +5,19 @@ on:
 
 jobs:
   invoke:
-    name: Invoke ai_proxy
+    name: Set secret & Invoke ai_proxy
     runs-on: ubuntu-latest
     steps:
+      - name: Configure Supabase OPENAI key
+        env:
+          PROJECT_REF: kjzpbpufphrirsjlzxua
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set -euo pipefail
+          echo "Setting OPENAI_API_KEY in Supabase project $PROJECT_REF"
+          npx supabase@latest --project-ref "$PROJECT_REF" secrets set OPENAI_API_KEY --value "$OPENAI_API_KEY"
+
       - name: Invoke `ai_proxy`
         env:
           PROJECT_REF: kjzpbpufphrirsjlzxua
