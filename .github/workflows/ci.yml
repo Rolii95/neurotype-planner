@@ -1,0 +1,36 @@
+﻿name: CI  lint, test, build, migrations
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test -- --run
+      - run: npm run build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-build
+          path: dist/**
+
+      - name: (Optional) Run Supabase migrations (gated)
+        if: ${{ env.RUN_MIGRATIONS == 'true' }}
+        env:
+          PROJECT_REF: ${{ secrets.PROJECT_REF }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "Running Supabase migrations for project $PROJECT_REF"
+          npx supabase@latest --project-ref "$PROJECT_REF" migrations deploy || true
