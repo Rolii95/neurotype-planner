@@ -107,59 +107,18 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-// Background sync for offline actions
-self.addEventListener('sync', (event: any) => {
-  if (event.tag === 'sync-tasks') {
-    event.waitUntil(syncTasks());
-  } else if (event.tag === 'sync-mood') {
-    event.waitUntil(syncMoodLogs());
-  }
-});
-
-async function syncTasks() {
-  try {
-    const cache = await caches.open('pending-tasks');
-    const requests = await cache.keys();
-    
-    for (const request of requests) {
-      const response = await cache.match(request);
-      if (response) {
-        const data = await response.json();
-        // Send to Supabase
-        await fetch(request.url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        await cache.delete(request);
-      }
-    }
-  } catch (error) {
-    console.error('Background sync failed:', error);
-  }
-}
-
-async function syncMoodLogs() {
-  try {
-    const cache = await caches.open('pending-mood-logs');
-    const requests = await cache.keys();
-    
-    for (const request of requests) {
-      const response = await cache.match(request);
-      if (response) {
-        const data = await response.json();
-        await fetch(request.url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        await cache.delete(request);
-      }
-    }
-  } catch (error) {
-    console.error('Mood log sync failed:', error);
-  }
-}
+// Background sync support intentionally removed.
+// The previous implementation relied on storing requests in caches named
+// `pending-tasks` / `pending-mood-logs` and replaying them during the
+// ServiceWorker 'sync' event. That pattern was partial and fragile (cache
+// entry formats vary across implementations). To avoid inconsistent
+// behavior across browsers we remove the partial background-sync logic.
+//
+// If you want robust background sync, implement a small IndexedDB queue
+// (e.g., `idb` helper) that serializes pending actions and replay them
+// in a `sync` handler which sends canonical JSON payloads to the API.
+// For now the app should surface an offline indicator and queue actions
+// in the app layer or via a dedicated background sync library.
 
 // Push notifications
 self.addEventListener('push', (event: any) => {
