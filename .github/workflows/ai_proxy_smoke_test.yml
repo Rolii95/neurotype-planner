@@ -1,0 +1,31 @@
+name: ai_proxy smoke test
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  invoke:
+    name: Invoke ai_proxy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke `ai_proxy`
+        env:
+          PROJECT_REF: kjzpbpufphrirsjlzxua
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        run: |
+          set -euo pipefail
+          URL="https://${PROJECT_REF}.functions.supabase.co/ai_proxy"
+          echo "Invoking $URL"
+          # Call the function using the service role key as Authorization header
+          HTTP_STATUS=$(curl -s -o /tmp/ai_response.json -w "%{http_code}" \
+            -X POST "$URL" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            -d '{"input":"smoke-test-ping"}')
+          echo "HTTP status: $HTTP_STATUS"
+          echo "Response body:" && cat /tmp/ai_response.json || true
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "Function returned non-200 status" >&2
+            exit 1
+          fi
