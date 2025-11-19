@@ -1,4 +1,4 @@
-import { serve } from 'std/server';
+import { serve } from 'https://deno.land/std@0.203.0/http/server.ts';
 
 serve(async (req) => {
   // Minimal stub for Google OAuth exchange
