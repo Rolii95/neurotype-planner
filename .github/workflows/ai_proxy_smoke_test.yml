@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "Setting OPENAI_API_KEY in Supabase project $PROJECT_REF"
-          npx supabase@latest --project-ref "$PROJECT_REF" secrets set OPENAI_API_KEY --value "$OPENAI_API_KEY"
+          npx supabase@latest --project-ref "$PROJECT_REF" secrets set OPENAI_API_KEY="$OPENAI_API_KEY"
 
       - name: Invoke `ai_proxy`
         env:
