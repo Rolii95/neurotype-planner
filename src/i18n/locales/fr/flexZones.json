@@ -1,0 +1,10 @@
+{
+  "flexZone": {
+    "title": "Zone Flexible",
+    "description": "Une période de temps flexible où vous pouvez travailler à votre rythme",
+    "expand": "Étendre la zone flexible",
+    "collapse": "Réduire la zone flexible",
+    "timer": "Minuteur",
+    "freeSpace": "Espace Libre"
+  }
+}

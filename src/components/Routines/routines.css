@@ -1,0 +1,495 @@
+/* Flex Zones & Transition Support CSS */
+/* High-contrast theme support and accessibility features */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* CSS Custom Properties for theming */
+:root {
+  /* Default theme */
+  --flex-zone-bg: theme('colors.purple.50');
+  --flex-zone-border: theme('colors.purple.300');
+  --flex-zone-accent: theme('colors.purple.500');
+  --routine-step-bg: theme('colors.blue.50');
+  --routine-step-border: theme('colors.blue.300');
+  --routine-step-accent: theme('colors.blue.500');
+  --note-step-bg: theme('colors.amber.50');
+  --note-step-border: theme('colors.amber.300');
+  --note-step-accent: theme('colors.amber.500');
+  
+  /* Timer colors */
+  --timer-normal: theme('colors.gray.800');
+  --timer-warning: theme('colors.amber.600');
+  --timer-danger: theme('colors.red.600');
+  
+  /* Transition overlay */
+  --transition-overlay: rgba(0, 0, 0, 0.5);
+  
+  /* Focus indicators */
+  --focus-ring: theme('colors.blue.500');
+  --focus-ring-offset: theme('colors.white');
+}
+
+/* High contrast theme */
+[data-theme="high-contrast"] {
+  --flex-zone-bg: #000000;
+  --flex-zone-border: #FFFFFF;
+  --flex-zone-accent: #FFFF00;
+  --routine-step-bg: #000000;
+  --routine-step-border: #FFFFFF;
+  --routine-step-accent: #00FFFF;
+  --note-step-bg: #000000;
+  --note-step-border: #FFFFFF;
+  --note-step-accent: #FF00FF;
+  
+  --timer-normal: #FFFFFF;
+  --timer-warning: #FFFF00;
+  --timer-danger: #FF0000;
+  
+  --transition-overlay: rgba(255, 255, 255, 0.95);
+  
+  --focus-ring: #FFFF00;
+  --focus-ring-offset: #000000;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Enhanced focus indicators for keyboard navigation */
+.focus-enhanced:focus {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--focus-ring-offset), 0 0 0 5px var(--focus-ring);
+}
+
+/* Routine Container - Main Flexbox Layout */
+.routine-container {
+  @apply flex flex-col gap-4 p-4;
+  min-height: 100vh;
+}
+
+.routine-steps-list {
+  @apply flex flex-col gap-3;
+  /* Ensure proper spacing with flexbox */
+  align-items: stretch;
+}
+
+/* Step Cards - Flexbox for internal layout */
+.step-card {
+  @apply flex flex-col border rounded-lg transition-all duration-200 bg-white;
+  /* Flexbox properties for consistent sizing */
+  flex-shrink: 0;
+  min-height: fit-content;
+}
+
+.step-card-header {
+  @apply flex items-center justify-between p-4;
+  /* Flex properties for header layout */
+  flex-wrap: wrap;
+  gap: theme('spacing.3');
+}
+
+.step-card-content {
+  @apply flex-1 min-w-0; /* min-w-0 allows text truncation */
+}
+
+.step-card-actions {
+  @apply flex items-center gap-2;
+  /* Prevent actions from shrinking */
+  flex-shrink: 0;
+}
+
+/* Flex Zone Specific Styles */
+.flex-zone {
+  border: 2px dashed var(--flex-zone-border);
+  background-color: var(--flex-zone-bg);
+  border-radius: theme('borderRadius.lg');
+  transition: all theme('transitionDuration.200') theme('transitionTimingFunction.default');
+}
+
+.flex-zone:focus-within {
+  border-color: var(--flex-zone-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--flex-zone-accent) 25%, transparent);
+}
+
+.flex-zone.active {
+  border-color: var(--flex-zone-accent);
+  background-color: color-mix(in srgb, var(--flex-zone-accent) 10%, var(--flex-zone-bg));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--flex-zone-accent) 50%, transparent);
+}
+
+.flex-zone.warning {
+  animation: pulse-warning 2s infinite;
+  border-color: var(--timer-warning);
+  background-color: color-mix(in srgb, var(--timer-warning) 10%, var(--flex-zone-bg));
+}
+
+@keyframes pulse-warning {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--timer-warning) 40%, transparent);
+  }
+  50% { 
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--timer-warning) 0%, transparent);
+  }
+}
+
+/* Timer Display - Flexbox for centering */
+.timer-display {
+  @apply flex flex-col items-center justify-center gap-2;
+  min-height: theme('spacing.32');
+}
+
+.timer-time {
+  font-family: theme('fontFamily.mono');
+  font-size: theme('fontSize.4xl');
+  font-weight: theme('fontWeight.bold');
+  color: var(--timer-normal);
+  line-height: 1;
+}
+
+.timer-time.warning {
+  color: var(--timer-warning);
+}
+
+.timer-time.danger {
+  color: var(--timer-danger);
+  animation: pulse-danger 1s infinite;
+}
+
+@keyframes pulse-danger {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.timer-controls {
+  @apply flex items-center justify-center gap-3;
+  flex-wrap: wrap;
+}
+
+/* Tab Navigation - Flexbox */
+.tab-list {
+  @apply flex border-b border-gray-200;
+  overflow-x: auto; /* Allow horizontal scroll on small screens */
+}
+
+.tab-button {
+  @apply px-4 py-2 text-sm font-medium border-b-2 border-transparent transition-colors;
+  white-space: nowrap; /* Prevent tab text wrapping */
+  flex-shrink: 0;
+}
+
+.tab-button:hover {
+  @apply text-gray-700 border-gray-300;
+}
+
+.tab-button[aria-selected="true"] {
+  @apply text-blue-600 border-blue-600;
+}
+
+.tab-button:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Freeform Content Area */
+.freeform-container {
+  @apply flex flex-col gap-4;
+}
+
+.freeform-type-selector {
+  @apply flex gap-2;
+  flex-wrap: wrap;
+}
+
+.freeform-content {
+  @apply flex-1;
+  min-height: theme('spacing.32');
+}
+
+/* Rich Text Editor */
+.rich-text-editor {
+  @apply border border-gray-300 rounded-lg overflow-hidden;
+}
+
+.rich-text-toolbar {
+  @apply flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 bg-gray-50;
+}
+
+.rich-text-content {
+  @apply p-3 min-h-32 focus:outline-none;
+  overflow-wrap: break-word;
+}
+
+.rich-text-content:empty::before {
+  content: attr(data-placeholder);
+  color: theme('colors.gray.400');
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* Sketch Canvas */
+.sketch-canvas {
+  @apply border border-gray-300 rounded-lg overflow-hidden;
+}
+
+.sketch-toolbar {
+  @apply flex flex-wrap items-center gap-2 p-2 border-b border-gray-200 bg-gray-50;
+}
+
+.sketch-canvas-container {
+  @apply p-2 bg-white;
+}
+
+.sketch-canvas-element {
+  @apply border border-gray-300 rounded cursor-crosshair;
+  touch-action: none; /* Prevent browser touch handling */
+  width: 100%;
+  height: auto;
+}
+
+/* Transition Cue Overlay */
+.transition-overlay {
+  @apply fixed inset-0 z-50;
+  background-color: var(--transition-overlay);
+  backdrop-filter: blur(4px);
+}
+
+.transition-content {
+  @apply flex items-center justify-center min-h-screen p-4;
+}
+
+.transition-card {
+  @apply bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center;
+  transform: scale(1);
+  animation: transition-enter 0.3s ease-out;
+}
+
+@keyframes transition-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Drag and Drop Styles */
+.dnd-item {
+  transition: transform theme('transitionDuration.200') theme('transitionTimingFunction.default');
+}
+
+.dnd-item.dragging {
+  transform: rotate(2deg);
+  opacity: 0.5;
+  z-index: 1000;
+  box-shadow: theme('boxShadow.2xl');
+}
+
+.dnd-drop-zone {
+  @apply flex justify-center py-2 transition-all duration-200;
+}
+
+.dnd-drop-zone.active {
+  transform: scale(1.05);
+}
+
+.dnd-drop-zone-content {
+  @apply flex gap-2 p-2 rounded-lg border-2 border-dashed border-gray-300 transition-colors;
+}
+
+.dnd-drop-zone.active .dnd-drop-zone-content {
+  @apply border-blue-500 bg-blue-50;
+}
+
+/* Insert Button Styles */
+.insert-button {
+  @apply px-3 py-1 text-xs rounded transition-colors;
+  font-weight: theme('fontWeight.medium');
+}
+
+.insert-button-routine {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.insert-button-routine:hover {
+  @apply bg-blue-200;
+}
+
+.insert-button-flex {
+  @apply bg-purple-100 text-purple-700;
+}
+
+.insert-button-flex:hover {
+  @apply bg-purple-200;
+}
+
+.insert-button-note {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.insert-button-note:hover {
+  @apply bg-amber-200;
+}
+
+/* Routine Statistics */
+.routine-stats {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg;
+}
+
+.routine-stat {
+  @apply text-center;
+}
+
+.routine-stat-label {
+  @apply text-sm text-gray-600 mb-1;
+}
+
+.routine-stat-value {
+  @apply text-lg font-semibold text-gray-800;
+}
+
+/* Validation Messages */
+.validation-error {
+  @apply p-3 bg-red-50 border-l-4 border-red-400 text-red-700 text-sm;
+}
+
+.validation-warning {
+  @apply p-3 bg-amber-50 border-l-4 border-amber-400 text-amber-700 text-sm;
+}
+
+/* Progress Indicators */
+.progress-bar {
+  @apply w-full bg-gray-200 rounded-full overflow-hidden;
+  height: theme('spacing.2');
+}
+
+.progress-fill {
+  @apply h-full bg-blue-500 transition-all duration-500 ease-out;
+}
+
+/* Accessibility Enhancements */
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .step-card,
+  .flex-zone,
+  .rich-text-editor,
+  .sketch-canvas {
+    border-width: 3px;
+  }
+  
+  .focus-enhanced:focus {
+    outline-width: 4px;
+  }
+}
+
+/* Large text support */
+@media (min-resolution: 120dpi) {
+  .timer-time {
+    font-size: theme('fontSize.5xl');
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .routine-container {
+    @apply px-2;
+  }
+  
+  .step-card-header {
+    @apply flex-col items-start gap-2;
+  }
+  
+  .step-card-actions {
+    @apply w-full justify-end;
+  }
+  
+  .timer-controls {
+    @apply gap-2;
+  }
+  
+  .timer-controls button {
+    @apply px-3 py-2 text-sm;
+  }
+  
+  .routine-stats {
+    @apply grid-cols-1;
+  }
+  
+  .rich-text-toolbar,
+  .sketch-toolbar {
+    @apply gap-1;
+  }
+  
+  .tab-list {
+    @apply text-sm;
+  }
+}
+
+/* Print styles */
+@media print {
+  .routine-container {
+    @apply text-black bg-white;
+  }
+  
+  .step-card {
+    @apply border-black;
+    break-inside: avoid;
+  }
+  
+  .timer-controls,
+  .step-card-actions,
+  .rich-text-toolbar,
+  .sketch-toolbar {
+    @apply hidden;
+  }
+  
+  .transition-overlay {
+    @apply hidden;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] {
+    --flex-zone-bg: theme('colors.purple.900');
+    --flex-zone-border: theme('colors.purple.600');
+    --flex-zone-accent: theme('colors.purple.400');
+    --routine-step-bg: theme('colors.blue.900');
+    --routine-step-border: theme('colors.blue.600');
+    --routine-step-accent: theme('colors.blue.400');
+    --note-step-bg: theme('colors.amber.900');
+    --note-step-border: theme('colors.amber.600');
+    --note-step-accent: theme('colors.amber.400');
+    
+    --timer-normal: theme('colors.gray.100');
+    --timer-warning: theme('colors.amber.400');
+    --timer-danger: theme('colors.red.400');
+    
+    --transition-overlay: rgba(0, 0, 0, 0.8);
+    
+    --focus-ring: theme('colors.blue.400');
+    --focus-ring-offset: theme('colors.gray.900');
+  }
+}

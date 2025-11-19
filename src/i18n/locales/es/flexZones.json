@@ -1,0 +1,50 @@
+{
+  "flexZone": {
+    "title": "Zona Flexible",
+    "description": "Un período de tiempo flexible donde puedes trabajar a tu propio ritmo",
+    "expand": "Expandir zona flexible",
+    "collapse": "Contraer zona flexible",
+    "timer": "Temporizador",
+    "freeSpace": "Espacio Libre",
+    "notes": "Notas",
+    "sketch": "Dibujo",
+    "editTitle": "Editar título",
+    "editDuration": "Editar duración",
+    "overrun": "Tiempo excedido",
+    "warning": "Advertencia de tiempo"
+  },
+  "timer": {
+    "start": "Iniciar temporizador",
+    "pause": "Pausar temporizador",
+    "resume": "Reanudar temporizador",
+    "stop": "Detener temporizador",
+    "skip": "Saltar este paso",
+    "complete": "Marcar paso como completado",
+    "autoStart": "Inicio automático del temporizador",
+    "allowOverrun": "Permitir tiempo excedido",
+    "showWarning": "Mostrar advertencia de tiempo",
+    "endNotification": "Notificación de finalización"
+  },
+  "transition": {
+    "title": "Transición",
+    "cue": "Señal de transición",
+    "autoDismiss": "Auto-cerrar en {{count}} segundo",
+    "autoDismiss_plural": "Auto-cerrar en {{count}} segundos",
+    "acknowledge": "Entiendo",
+    "continue": "Continuar",
+    "dismiss": "Cerrar",
+    "playAudio": "Reproducir audio",
+    "visualCue": "Señal visual de transición",
+    "loading": "Cargando señal de transición...",
+    "error": "Error al cargar señal de transición"
+  },
+  "freeform": {
+    "richText": "Editor de texto enriquecido",
+    "sketchCanvas": "Lienzo de dibujo",
+    "addContent": "Agregar contenido",
+    "clearContent": "Limpiar contenido",
+    "autoSave": "Guardando automáticamente...",
+    "saved": "Guardado",
+    "unsavedChanges": "Cambios sin guardar"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "routine": {
+    "title": "Rutina",
+    "create": "Crear rutina",
+    "edit": "Editar rutina",
+    "delete": "Eliminar rutina",
+    "duplicate": "Duplicar rutina",
+    "start": "Iniciar rutina",
+    "pause": "Pausar rutina",
+    "complete": "Completar rutina",
+    "steps": "Pasos",
+    "duration": "Duración",
+    "addStep": "Agregar paso",
+    "editStep": "Editar paso",
+    "deleteStep": "Eliminar paso",
+    "reorderSteps": "Reordenar pasos",
+    "stepType": "Tipo de paso",
+    "stepTitle": "Título del paso",
+    "stepDescription": "Descripción del paso"
+  }
+}

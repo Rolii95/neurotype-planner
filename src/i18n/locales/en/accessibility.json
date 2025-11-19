@@ -1,0 +1,53 @@
+{
+  "preferences": {
+    "title": "Accessibility Preferences",
+    "highContrast": "High contrast mode",
+    "reducedMotion": "Reduced motion",
+    "largeText": "Large text",
+    "dyslexiaFont": "Dyslexia-friendly font",
+    "focusEnhancement": "Enhanced focus indicators",
+    "keyboardNavigation": "Keyboard navigation",
+    "screenReader": "Screen reader optimizations"
+  },
+  "announcements": {
+    "stepCompleted": "Step completed",
+    "routineStarted": "Routine started",
+    "routinePaused": "Routine paused",
+    "routineCompleted": "Routine completed",
+    "timerStarted": "Timer started",
+    "timerPaused": "Timer paused",
+    "timerCompleted": "Timer completed",
+    "transitionCue": "Transition cue: {{message}}",
+    "focusChange": "Focus moved to {{element}}",
+    "contentUpdated": "Content updated",
+    "errorOccurred": "Error occurred: {{message}}"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "mainContent": "Focus main content (Ctrl+1)",
+    "navigation": "Focus navigation (Ctrl+2)",
+    "search": "Focus search (Ctrl+/)",
+    "timerToggle": "Start/pause timer (Space)",
+    "nextStep": "Next step (Alt+Right)",
+    "previousStep": "Previous step (Alt+Left)",
+    "escapeModal": "Close modal (Escape)"
+  },
+  "landmarks": {
+    "main": "Main content",
+    "navigation": "Navigation",
+    "search": "Search",
+    "banner": "Banner",
+    "contentinfo": "Footer information",
+    "complementary": "Sidebar"
+  },
+  "states": {
+    "expanded": "Expanded",
+    "collapsed": "Collapsed",
+    "selected": "Selected",
+    "active": "Active",
+    "disabled": "Disabled",
+    "loading": "Loading",
+    "error": "Error",
+    "success": "Success"
+  }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Universal Neurotype Planner - Demo Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .demo-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.2s;
+        }
+        button:hover { background: #1d4ed8; transform: translateY(-1px); }
+        .success { color: #10b981; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Server Connection Test</h1>
+        
+        <div class="demo-box">
+            <h2>✅ Success!</h2>
+            <p>If you can see this page, the development server is working correctly.</p>
+            <div class="success">
+                🎉 Connection Status: ACTIVE<br>
+                📡 Server: Running on port 3000<br>
+                🌐 Protocol: HTTP
+            </div>
+        </div>
+
+        <div class="demo-box">
+            <h3>🔗 Available Links</h3>
+            <a href="/demo" style="color: white; text-decoration: underline;">
+                Go to React Demo Page →
+            </a>
+        </div>
+
+        <div class="demo-box">
+            <h3>🚀 Next Steps</h3>
+            <p>Once you confirm this page loads in Firefox:</p>
+            <ol style="text-align: left; max-width: 400px; margin: 0 auto;">
+                <li>Navigate to <code>/demo</code> for the React demo</li>
+                <li>Test the language switching features</li>
+                <li>Try the accessibility controls</li>
+                <li>Explore the responsive testing tools</li>
+            </ol>
+        </div>
+
+        <div class="demo-box">
+            <h3>📋 Technical Status</h3>
+            <p><strong>Current Time:</strong> <span id="time"></span></p>
+            <p><strong>Browser:</strong> <span id="browser"></span></p>
+            <p><strong>Screen:</strong> <span id="screen"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript to show the page is interactive
+        function updateStatus() {
+            document.getElementById('time').textContent = new Date().toLocaleTimeString();
+            document.getElementById('browser').textContent = navigator.userAgent.split(' ')[0];
+            document.getElementById('screen').textContent = window.innerWidth + 'x' + window.innerHeight;
+        }
+        
+        updateStatus();
+        setInterval(updateStatus, 1000);
+
+        // Log success to console
+        console.log('🎉 Universal Neurotype Planner - Server Test Successful!');
+        console.log('📍 You are at: ' + window.location.href);
+        console.log('🔗 Demo available at: ' + window.location.origin + '/demo');
+    </script>
+</body>
+</html>

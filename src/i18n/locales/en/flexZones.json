@@ -1,0 +1,50 @@
+{
+  "flexZone": {
+    "title": "Flex Zone",
+    "description": "A flexible time period where you can work at your own pace",
+    "expand": "Expand flex zone",
+    "collapse": "Collapse flex zone",
+    "timer": "Timer",
+    "freeSpace": "Free Space",
+    "notes": "Notes",
+    "sketch": "Sketch",
+    "editTitle": "Edit title",
+    "editDuration": "Edit duration",
+    "overrun": "Timer overrun",
+    "warning": "Time warning"
+  },
+  "timer": {
+    "start": "Start timer",
+    "pause": "Pause timer",
+    "resume": "Resume timer",
+    "stop": "Stop timer",
+    "skip": "Skip this step",
+    "complete": "Mark step as complete",
+    "autoStart": "Auto-start timer",
+    "allowOverrun": "Allow timer overrun",
+    "showWarning": "Show time warning",
+    "endNotification": "End notification"
+  },
+  "transition": {
+    "title": "Transition",
+    "cue": "Transition cue",
+    "autoDismiss": "Auto-dismiss in {{count}} second",
+    "autoDismiss_plural": "Auto-dismiss in {{count}} seconds",
+    "acknowledge": "I Understand",
+    "continue": "Continue",
+    "dismiss": "Dismiss",
+    "playAudio": "Play audio",
+    "visualCue": "Visual transition cue",
+    "loading": "Loading transition cue...",
+    "error": "Failed to load transition cue"
+  },
+  "freeform": {
+    "richText": "Rich text editor",
+    "sketchCanvas": "Sketch canvas",
+    "addContent": "Add content",
+    "clearContent": "Clear content",
+    "autoSave": "Auto-saving...",
+    "saved": "Saved",
+    "unsavedChanges": "Unsaved changes"
+  }
+}

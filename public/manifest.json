@@ -1,0 +1,110 @@
+{
+  "name": "Universal Neurotype Planner",
+  "short_name": "Neurotype Planner",
+  "description": "Adaptive executive function support tool for neurodivergent users",
+  "theme_color": "#4f46e5",
+  "background_color": "#f8fafc",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "start_url": "/",
+  "id": "neurotype-planner",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Quick Add Task",
+      "short_name": "Add Task",
+      "description": "Quickly add a new task",
+      "url": "/tasks/new",
+      "icons": [{ "src": "/icons/add-task-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Where Was I?",
+      "short_name": "Recall",
+      "description": "AI-powered context recall",
+      "url": "/?recall=true",
+      "icons": [{ "src": "/icons/recall-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Today's Routines",
+      "short_name": "Routines",
+      "description": "View today's routine boards",
+      "url": "/routines/today",
+      "icons": [{ "src": "/icons/routines-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["productivity", "health", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard view on desktop"
+    },
+    {
+      "src": "/screenshots/mobile-onboarding.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Onboarding flow on mobile"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "handle_links": "preferred",
+  "prefer_related_applications": false
+}

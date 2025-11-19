@@ -1,0 +1,12 @@
+{
+  "preferences": {
+    "title": "Preferencias de Accesibilidad",
+    "highContrast": "Modo de alto contraste",
+    "reducedMotion": "Movimiento reducido",
+    "largeText": "Texto grande",
+    "dyslexiaFont": "Fuente amigable para dislexia",
+    "focusEnhancement": "Indicadores de enfoque mejorados",
+    "keyboardNavigation": "Navegación por teclado",
+    "screenReader": "Optimizaciones para lector de pantalla"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "app": {
+    "title": "Universal Neurotype Planner",
+    "description": "Adaptive executive function support for neurodivergent users",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "validation": {
+    "required": "{{field}} is required",
+    "pattern": "{{field}} format is invalid",
+    "minLength": "{{field}} must be at least {{min}} characters",
+    "maxLength": "{{field}} must be no more than {{max}} characters",
+    "min": "{{field}} must be at least {{min}}",
+    "max": "{{field}} must be no more than {{max}}",
+    "email": "Please enter a valid email address",
+    "password": "Password must be at least 8 characters with uppercase, lowercase, and number"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "routines": "Routines",
+    "tasks": "Tasks",
+    "mood": "Mood",
+    "settings": "Settings",
+    "profile": "Profile",
+    "visualTools": "Visual Tools",
+    "skipToMain": "Skip to main content",
+    "skipToNav": "Skip to navigation",
+    "mainNav": "Main navigation"
+  },
+  "auth": {
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "createAccount": "Create account",
+    "welcomeBack": "Welcome back!",
+    "getStarted": "Get started"
+  },
+  "time": {
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "hours": "hours",
+    "minute": "minute",
+    "second": "second",
+    "hour": "hour",
+    "elapsed": "Elapsed",
+    "remaining": "Remaining",
+    "total": "Total"
+  },
+  "actions": {
+    "start": "Start",
+    "stop": "Stop",
+    "pause": "Pause",
+    "resume": "Resume",
+    "complete": "Complete",
+    "skip": "Skip",
+    "next": "Next",
+    "previous": "Previous",
+    "continue": "Continue",
+    "finish": "Finish"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "app": {
+    "title": "Planificador Universal de Neurotipo",
+    "description": "Apoyo adaptativo de función ejecutiva para usuarios neurodivergentes",
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Intentar de nuevo",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "open": "Abrir",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "validation": {
+    "required": "{{field}} es requerido",
+    "pattern": "El formato de {{field}} es inválido",
+    "minLength": "{{field}} debe tener al menos {{min}} caracteres",
+    "maxLength": "{{field}} no debe tener más de {{max}} caracteres",
+    "min": "{{field}} debe ser al menos {{min}}",
+    "max": "{{field}} no debe ser más de {{max}}",
+    "email": "Por favor ingresa una dirección de email válida",
+    "password": "La contraseña debe tener al menos 8 caracteres con mayúscula, minúscula y número"
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "routines": "Rutinas",
+    "tasks": "Tareas",
+    "mood": "Estado de ánimo",
+    "settings": "Configuración",
+    "profile": "Perfil",
+    "visualTools": "Herramientas visuales",
+    "skipToMain": "Saltar al contenido principal",
+    "skipToNav": "Saltar a la navegación",
+    "mainNav": "Navegación principal"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "signup": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "createAccount": "Crear cuenta",
+    "welcomeBack": "¡Bienvenido de vuelta!",
+    "getStarted": "Comenzar"
+  },
+  "time": {
+    "minutes": "minutos",
+    "seconds": "segundos",
+    "hours": "horas",
+    "minute": "minuto",
+    "second": "segundo",
+    "hour": "hora",
+    "elapsed": "Transcurrido",
+    "remaining": "Restante",
+    "total": "Total"
+  },
+  "actions": {
+    "start": "Iniciar",
+    "stop": "Detener",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "complete": "Completar",
+    "skip": "Saltar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "continue": "Continuar",
+    "finish": "Finalizar"
+  }
+}

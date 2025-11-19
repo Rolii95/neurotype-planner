@@ -1,0 +1,41 @@
+{
+  "routine": {
+    "title": "Routine",
+    "create": "Create routine",
+    "edit": "Edit routine",
+    "delete": "Delete routine",
+    "duplicate": "Duplicate routine",
+    "start": "Start routine",
+    "pause": "Pause routine",
+    "complete": "Complete routine",
+    "steps": "Steps",
+    "duration": "Duration",
+    "addStep": "Add step",
+    "editStep": "Edit step",
+    "deleteStep": "Delete step",
+    "reorderSteps": "Reorder steps",
+    "stepType": "Step type",
+    "stepTitle": "Step title",
+    "stepDescription": "Step description"
+  },
+  "builder": {
+    "title": "Routine Builder",
+    "dragDrop": "Drag and drop to reorder",
+    "validation": "Validation",
+    "constraints": "Constraints",
+    "preview": "Preview",
+    "save": "Save routine",
+    "cancel": "Cancel changes",
+    "unsavedChanges": "You have unsaved changes"
+  },
+  "execution": {
+    "currentStep": "Current step",
+    "nextStep": "Next step",
+    "previousStep": "Previous step",
+    "progress": "Progress",
+    "timeElapsed": "Time elapsed",
+    "estimatedCompletion": "Estimated completion",
+    "pauseReason": "Pause reason",
+    "interrupt": "Interrupt routine"
+  }
+}
