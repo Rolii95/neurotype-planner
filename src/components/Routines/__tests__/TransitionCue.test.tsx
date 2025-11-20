@@ -5,14 +5,20 @@ import '@testing-library/jest-dom';
 import TransitionCue from '../TransitionCue';
 import { TransitionCue as TransitionCueType } from '../../../types/routine';
 
+const createAccessibilityHelpers = () => ({
+  getAccessibilityClasses: () => 'mock-accessibility-classes',
+  announceToScreenReader: vi.fn(),
+  handleKeyboardNavigation: vi.fn(),
+  focusElement: vi.fn()
+});
+
+const mockUseAccessibility = vi.fn(createAccessibilityHelpers);
+
 // Mock the accessibility hook
 vi.mock('../../../hooks/useAccessibility', () => ({
-  useAccessibility: () => ({
-    getAccessibilityClasses: () => 'mock-accessibility-classes',
-    announceToScreenReader: vi.fn(),
-    handleKeyboardNavigation: vi.fn(),
-    focusElement: vi.fn()
-  })
+  __esModule: true,
+  default: mockUseAccessibility,
+  useAccessibility: mockUseAccessibility
 }));
 
 // Mock HTMLAudioElement
@@ -39,6 +45,7 @@ describe('TransitionCue Component', () => {
   };
 
   beforeEach(() => {
+    mockUseAccessibility.mockImplementation(createAccessibilityHelpers);
     vi.clearAllMocks();
     vi.useFakeTimers();
   });
@@ -388,11 +395,9 @@ describe('TransitionCue Component', () => {
     it('announces cue to screen readers when visible', () => {
       const mockAnnounce = vi.fn();
       
-      vi.mocked(require('../../../hooks/useAccessibility').useAccessibility).mockReturnValue({
-        getAccessibilityClasses: () => 'mock-accessibility-classes',
-        announceToScreenReader: mockAnnounce,
-        handleKeyboardNavigation: vi.fn(),
-        focusElement: vi.fn()
+      mockUseAccessibility.mockReturnValue({
+        ...createAccessibilityHelpers(),
+        announceToScreenReader: mockAnnounce
       });
 
       render(
@@ -411,10 +416,8 @@ describe('TransitionCue Component', () => {
     it('focuses dialog for keyboard navigation', () => {
       const mockFocus = vi.fn();
       
-      vi.mocked(require('../../../hooks/useAccessibility').useAccessibility).mockReturnValue({
-        getAccessibilityClasses: () => 'mock-accessibility-classes',
-        announceToScreenReader: vi.fn(),
-        handleKeyboardNavigation: vi.fn(),
+      mockUseAccessibility.mockReturnValue({
+        ...createAccessibilityHelpers(),
         focusElement: mockFocus
       });
 

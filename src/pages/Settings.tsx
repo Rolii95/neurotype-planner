@@ -159,7 +159,7 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        {/* Accessibility */}
+        {/* Accessibility (centralized via Quick Access) */}
         <section className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
@@ -173,35 +173,24 @@ export default function SettingsPage() {
                 Accessibility
               </h2>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Adjust settings for better accessibility
+                Centralized accessibility controls are available from the <strong>Accessibility</strong> Quick Access panel in the top bar.
               </p>
             </div>
           </div>
 
           <div className="space-y-4">
-            {Object.entries(accessibility).map(([key, value]) => (
-              <label key={key} className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
-                <div>
-                  <div className="font-medium text-gray-900 dark:text-white">
-                    {key.replace(/([A-Z])/g, ' $1').trim().replace(/^\w/, c => c.toUpperCase())}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    {key === 'reducedMotion' && 'Minimize animations and transitions'}
-                    {key === 'highContrast' && 'Increase contrast for better visibility'}
-                    {key === 'largeText' && 'Use larger font sizes'}
-                    {key === 'screenReader' && 'Optimize for screen readers'}
-                  </div>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={value}
-                  onChange={(e) =>
-                    setAccessibility({ ...accessibility, [key]: e.target.checked })
-                  }
-                  className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                />
-              </label>
-            ))}
+            <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-between">
+              <div>
+                <div className="font-medium text-gray-900 dark:text-white">Manage accessibility settings</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Open the Quick Access panel to change high contrast, dyslexia font, reduced motion, and font size.</div>
+              </div>
+              <button
+                onClick={() => { try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); } }}
+                className="px-3 py-2 rounded-lg persona-ghost-button"
+              >
+                Open Quick Access
+              </button>
+            </div>
           </div>
         </section>
 

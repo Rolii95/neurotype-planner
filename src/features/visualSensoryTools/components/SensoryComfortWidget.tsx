@@ -117,6 +117,7 @@ export const SensoryComfortWidget: React.FC<SensoryComfortWidgetProps> = ({
   const [highContrastMode, setHighContrastMode] = useState(false);
   const [largeTextMode, setLargeTextMode] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Initialize preferences if none exist
   useEffect(() => {
@@ -268,12 +269,15 @@ export const SensoryComfortWidget: React.FC<SensoryComfortWidgetProps> = ({
     if (!currentPrefs) return;
 
     try {
+      setIsSaving(true);
       await updateSensoryPreferences(currentPrefs);
       if (showAsModal) {
         setIsOpen(false);
       }
     } catch (error) {
       console.error('Failed to save sensory preferences:', error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -399,19 +403,19 @@ export const SensoryComfortWidget: React.FC<SensoryComfortWidgetProps> = ({
                         onSetShowAdvanced={setShowAdvanced}
                         onSetHighContrast={setHighContrastMode}
                         onSetLargeText={setLargeTextMode}
-                        isLoading={isLoading}
+                      isLoading={isLoading || isSaving}
                         compact={compact}
                       />
-                    </div>
+                        </div>
+                      </div>
+                    </Transition.Child>
                   </div>
-                </Transition.Child>
+                </div>
               </div>
-            </div>
-          </div>
-        </Transition>
-      </>
-    );
-  }
+            </Transition>
+          </>
+        );
+      }
 
   // Modal mode
   if (showAsModal) {
@@ -461,8 +465,9 @@ export const SensoryComfortWidget: React.FC<SensoryComfortWidgetProps> = ({
                     onSetShowAdvanced={setShowAdvanced}
                     onSetHighContrast={setHighContrastMode}
                     onSetLargeText={setLargeTextMode}
-                    isLoading={isLoading}
+                    isLoading={isLoading || isSaving}
                     compact={compact}
+                    isLoading={isLoading || isSaving}
                   />
                 </Dialog.Panel>
               </Transition.Child>
@@ -493,7 +498,7 @@ export const SensoryComfortWidget: React.FC<SensoryComfortWidgetProps> = ({
         onSetShowAdvanced={setShowAdvanced}
         onSetHighContrast={setHighContrastMode}
         onSetLargeText={setLargeTextMode}
-        isLoading={isLoading}
+        isLoading={isLoading || isSaving}
         compact={compact}
       />
     </div>
@@ -568,13 +573,14 @@ const SensoryWidgetContent: React.FC<SensoryWidgetContentProps> = ({
         </div>
         
         <div className="flex items-center gap-2">
-          {/* Accessibility Controls */}
+          {/* Accessibility Controls -> open centralized Quick Access */}
           <button
-            onClick={() => onSetHighContrast(!highContrastMode)}
+            onClick={() => { try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); } }}
             className={`p-2 rounded ${
               highContrastMode ? 'bg-yellow-200' : 'bg-gray-100'
             } hover:bg-gray-200`}
-            aria-label="Toggle high contrast"
+            aria-label="Open accessibility quick access"
+            title="Open Accessibility Quick Access"
           >
             <Cog6ToothIcon className="h-4 w-4" />
           </button>
@@ -668,16 +674,18 @@ const SensoryWidgetContent: React.FC<SensoryWidgetContentProps> = ({
         </div>
         
         <div className="flex items-center gap-2">
-          <label className={`text-sm ${largeTextMode ? 'text-base' : ''}`}>
+          <label htmlFor="stress-level-slider" className={`text-sm ${largeTextMode ? 'text-base' : ''}`}>
             Stress: {currentPrefs.currentState.stressLevel}/10
           </label>
           <input
+            id="stress-level-slider"
             type="range"
             min="1"
             max="10"
             value={currentPrefs.currentState.stressLevel}
             onChange={(e) => onStateChange('stressLevel', parseInt(e.target.value))}
             className="flex-1"
+            aria-label="Stress level"
           />
         </div>
       </div>
@@ -690,12 +698,16 @@ const SensoryWidgetContent: React.FC<SensoryWidgetContentProps> = ({
           </h4>
           {SENSORY_FACTORS.map((factor) => {
             const IconComponent = factor.icon;
+            const sliderId = `${factor.key}-slider`;
             return (
               <div key={factor.key} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <IconComponent className="h-4 w-4 text-gray-500" />
-                    <label className={`text-sm ${largeTextMode ? 'text-base' : ''} font-medium`}>
+                    <label
+                      htmlFor={sliderId}
+                      className={`text-sm ${largeTextMode ? 'text-base' : ''} font-medium`}
+                    >
                       {factor.label}
                     </label>
                   </div>
@@ -704,12 +716,14 @@ const SensoryWidgetContent: React.FC<SensoryWidgetContentProps> = ({
                   </span>
                 </div>
                 <input
+                  id={sliderId}
                   type="range"
                   min="1"
                   max="10"
                   value={currentPrefs.preferences[factor.key]}
                   onChange={(e) => onPreferenceChange(factor.key, parseInt(e.target.value))}
                   className="w-full"
+                  aria-label={`${factor.label} level`}
                 />
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>{factor.lowLabel}</span>
@@ -727,12 +741,15 @@ const SensoryWidgetContent: React.FC<SensoryWidgetContentProps> = ({
           <button
             onClick={() => onSetShowAdvanced(!showAdvanced)}
             className="text-sm text-blue-600 hover:text-blue-800"
+            role="button"
+            aria-expanded={showAdvanced}
+            aria-controls="accommodations-panel"
           >
             {showAdvanced ? 'Hide' : 'Show'} accommodations
           </button>
           
           {showAdvanced && (
-            <div className="mt-3 space-y-3">
+            <div id="accommodations-panel" className="mt-3 space-y-3">
               <h4 className={`font-medium ${largeTextMode ? 'text-lg' : 'text-base'} text-gray-900`}>
                 Available Accommodations
               </h4>
@@ -779,3 +796,4 @@ const SensoryWidgetContent: React.FC<SensoryWidgetContentProps> = ({
     </div>
   );
 };
+

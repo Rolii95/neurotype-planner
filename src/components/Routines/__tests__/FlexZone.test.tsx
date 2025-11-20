@@ -5,17 +5,23 @@ import '@testing-library/jest-dom';
 import FlexZone from '../FlexZone';
 import { RoutineStep } from '../../../types/routine';
 
+const createAccessibilityHelpers = () => ({
+  getAccessibilityClasses: () => 'mock-accessibility-classes',
+  getAriaProps: (type: string) => ({
+    'aria-label': `Mock ${type} label`,
+    role: type === 'timer' ? 'timer' : 'region'
+  }),
+  announceToScreenReader: vi.fn(),
+  handleKeyboardNavigation: vi.fn()
+});
+
+const mockUseAccessibility = vi.fn(createAccessibilityHelpers);
+
 // Mock the accessibility hook
 vi.mock('../../../hooks/useAccessibility', () => ({
-  useAccessibility: () => ({
-    getAccessibilityClasses: () => 'mock-accessibility-classes',
-    getAriaProps: (type: string, data?: any) => ({
-      'aria-label': `Mock ${type} label`,
-      role: type === 'timer' ? 'timer' : 'region'
-    }),
-    announceToScreenReader: vi.fn(),
-    handleKeyboardNavigation: vi.fn()
-  })
+  __esModule: true,
+  default: mockUseAccessibility,
+  useAccessibility: mockUseAccessibility
 }));
 
 // Mock rich text and sketch components
@@ -82,6 +88,7 @@ describe('FlexZone Component', () => {
   };
 
   beforeEach(() => {
+    mockUseAccessibility.mockImplementation(createAccessibilityHelpers);
     vi.clearAllMocks();
     vi.useFakeTimers();
   });
@@ -517,10 +524,8 @@ describe('FlexZone Component', () => {
       const mockHandleKeyboard = vi.fn();
       
       // Mock the accessibility hook to capture keyboard events
-      vi.mocked(require('../../../hooks/useAccessibility').useAccessibility).mockReturnValue({
-        getAccessibilityClasses: () => 'mock-accessibility-classes',
-        getAriaProps: () => ({ 'aria-label': 'Mock label', role: 'region' }),
-        announceToScreenReader: vi.fn(),
+      mockUseAccessibility.mockReturnValue({
+        ...createAccessibilityHelpers(),
         handleKeyboardNavigation: mockHandleKeyboard
       });
 

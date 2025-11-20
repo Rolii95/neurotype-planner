@@ -26,7 +26,7 @@ const mockStep: RoutineStep = {
 const renderWithProvider = (component: React.ReactElement) => {
   return render(
     <VisualSensoryProvider>
-      {component}
+      <div style={{ width: '800px', height: '600px' }}>{component}</div>
     </VisualSensoryProvider>
   );
 };

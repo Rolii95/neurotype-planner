@@ -69,15 +69,12 @@ const calculateStreaks = (dates: string[]): { current: number; longest: number }
   const todayKey = formatDateKey(new Date().toISOString());
   let currentStreak = 0;
   let cursor = new Date(todayKey);
+  let cursorKey = formatDateKey(cursor.toISOString());
 
-  while (true) {
-    const key = formatDateKey(cursor.toISOString());
-    if (uniqueSet.has(key)) {
-      currentStreak += 1;
-      cursor.setDate(cursor.getDate() - 1);
-    } else {
-      break;
-    }
+  while (uniqueSet.has(cursorKey)) {
+    currentStreak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+    cursorKey = formatDateKey(cursor.toISOString());
   }
 
   return { current: currentStreak, longest };

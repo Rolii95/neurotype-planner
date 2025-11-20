@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 const SimpleWorkingDemo: React.FC = () => {
   const [currentTab, setCurrentTab] = useState('overview');
   const [language, setLanguage] = useState('en');
-  const [highContrast, setHighContrast] = useState(false);
-  const [largeText, setLargeText] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  // Accessibility is managed centrally via Quick Access
+  const [highContrast] = useState(false);
+  const [largeText] = useState(false);
+  const [reducedMotion] = useState(false);
 
   const tabs = [
     { id: 'overview', label: 'Overview' },
@@ -112,47 +113,16 @@ const SimpleWorkingDemo: React.FC = () => {
     <div className="space-y-6">
       <div className="bg-gray-50 p-4 rounded-lg">
         <h3 className="font-semibold mb-4">Accessibility Controls</h3>
-        
+
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <span>High Contrast Mode</span>
+          <p className="text-sm text-gray-600">Accessibility options (high contrast, dyslexia-friendly font, reduced motion, font size) are managed from the Quick Access panel in the top-right.</p>
+          <div className="mt-3">
             <button
-              onClick={() => setHighContrast(!highContrast)}
-              className={`w-12 h-6 rounded-full transition-colors ${
-                highContrast ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
+              onClick={() => { try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); } }}
+              className="px-4 py-2 rounded-lg persona-ghost-button"
+              aria-label="Open Accessibility Quick Access"
             >
-              <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                highContrast ? 'translate-x-6' : 'translate-x-1'
-              }`} />
-            </button>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <span>Large Text</span>
-            <button
-              onClick={() => setLargeText(!largeText)}
-              className={`w-12 h-6 rounded-full transition-colors ${
-                largeText ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-            >
-              <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                largeText ? 'translate-x-6' : 'translate-x-1'
-              }`} />
-            </button>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <span>Reduced Motion</span>
-            <button
-              onClick={() => setReducedMotion(!reducedMotion)}
-              className={`w-12 h-6 rounded-full transition-colors ${
-                reducedMotion ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-            >
-              <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                reducedMotion ? 'translate-x-6' : 'translate-x-1'
-              }`} />
+              Open Quick Access
             </button>
           </div>
         </div>

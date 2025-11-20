@@ -11,15 +11,21 @@ import { EnhancedRoutine, RoutineStep } from '../../../types/routine';
 // Mock the store
 vi.mock('../../../stores/routineStore');
 
+const createAccessibilityHelpers = () => ({
+  getAccessibilityClasses: () => 'mock-accessibility-classes',
+  getAriaProps: () => ({ 'aria-label': 'Mock label', role: 'region' }),
+  announceToScreenReader: vi.fn(),
+  handleKeyboardNavigation: vi.fn(),
+  focusElement: vi.fn()
+});
+
+const mockUseAccessibility = vi.fn(createAccessibilityHelpers);
+
 // Mock accessibility hook
 vi.mock('../../../hooks/useAccessibility', () => ({
-  useAccessibility: () => ({
-    getAccessibilityClasses: () => 'mock-accessibility-classes',
-    getAriaProps: () => ({ 'aria-label': 'Mock label', role: 'region' }),
-    announceToScreenReader: vi.fn(),
-    handleKeyboardNavigation: vi.fn(),
-    focusElement: vi.fn()
-  })
+  __esModule: true,
+  default: mockUseAccessibility,
+  useAccessibility: mockUseAccessibility
 }));
 
 // Mock DnD kit
@@ -155,6 +161,7 @@ describe('Flex Zones & Transition Support Integration', () => {
   };
 
   beforeEach(() => {
+    mockUseAccessibility.mockImplementation(createAccessibilityHelpers);
     vi.clearAllMocks();
     (useRoutineStore as any).mockReturnValue(mockStore);
     mockStore.currentRoutine = { ...mockRoutine, steps: [...mockSteps] };
@@ -420,12 +427,9 @@ describe('Flex Zones & Transition Support Integration', () => {
       const mockHandleKeyboard = vi.fn();
       
       // Mock accessibility hook with keyboard handler
-      vi.mocked(require('../../../hooks/useAccessibility').useAccessibility).mockReturnValue({
-        getAccessibilityClasses: () => 'mock-accessibility-classes',
-        getAriaProps: () => ({ 'aria-label': 'Mock label', role: 'region' }),
-        announceToScreenReader: vi.fn(),
-        handleKeyboardNavigation: mockHandleKeyboard,
-        focusElement: vi.fn()
+      mockUseAccessibility.mockReturnValue({
+        ...createAccessibilityHelpers(),
+        handleKeyboardNavigation: mockHandleKeyboard
       });
 
       render(
@@ -451,12 +455,9 @@ describe('Flex Zones & Transition Support Integration', () => {
     it('announces important state changes to screen readers', () => {
       const mockAnnounce = vi.fn();
       
-      vi.mocked(require('../../../hooks/useAccessibility').useAccessibility).mockReturnValue({
-        getAccessibilityClasses: () => 'mock-accessibility-classes',
-        getAriaProps: () => ({ 'aria-label': 'Mock label', role: 'region' }),
-        announceToScreenReader: mockAnnounce,
-        handleKeyboardNavigation: vi.fn(),
-        focusElement: vi.fn()
+      mockUseAccessibility.mockReturnValue({
+        ...createAccessibilityHelpers(),
+        announceToScreenReader: mockAnnounce
       });
 
       render(

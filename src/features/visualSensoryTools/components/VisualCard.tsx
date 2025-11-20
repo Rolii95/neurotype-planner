@@ -99,11 +99,11 @@ export const VisualCard: React.FC<VisualCardProps> = ({
       style={style}
       className={cardClasses}
       aria-label={`Step: ${step.title}`}
-      {...attributes}
     >
       {/* Drag Handle */}
       {!disabled && !isEditing && (
         <div
+          {...attributes}
           {...listeners}
           className="absolute top-2 left-2 p-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing"
           aria-label="Drag to reorder"
@@ -274,7 +274,7 @@ export const VisualCard: React.FC<VisualCardProps> = ({
                   ? 'bg-green-100 text-green-800 hover:bg-green-200'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
-              aria-label={step.isCompleted ? 'Mark as incomplete' : 'Mark as complete'}
+              aria-label={step.isCompleted ? 'Undo completion' : 'Mark as complete (Mark done)'}
             >
               <div className="flex items-center justify-center gap-2">
                 <CheckIcon className={`h-4 w-4 ${
@@ -298,3 +298,4 @@ export const VisualCard: React.FC<VisualCardProps> = ({
     </div>
   );
 };
+

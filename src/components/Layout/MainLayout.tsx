@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useEffect } from 'react';
+import React, { ReactNode, useState, useEffect, Suspense } from 'react';
 import { Sidebar } from './Sidebar';
 import { Breadcrumbs } from './Breadcrumbs';
 import { CommandPalette } from './CommandPalette';
@@ -6,6 +6,7 @@ import { KeyboardShortcutsHelp } from '../KeyboardShortcutsHelp';
 import { NotificationCenter } from '../NotificationCenter';
 import { RecallButton } from '../RecallButton';
 import { FloatingAIAssistant } from '../FloatingAIAssistant';
+const QuickAccessPanel = React.lazy(() => import('../QuickAccess/QuickAccessPanel'));
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 
 interface MainLayoutProps {
@@ -70,6 +71,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <div className="flex items-center gap-2">
                 {/* Notification Center */}
                 <NotificationCenter />
+
+                {/* Quick Access Accessibility Panel (lazy-loaded) */}
+                <Suspense fallback={<button className="p-2 rounded-lg persona-ghost-button" aria-hidden>Accessibility</button>}>
+                  <QuickAccessPanel />
+                </Suspense>
 
                 {/* Keyboard Shortcuts */}
                 <button

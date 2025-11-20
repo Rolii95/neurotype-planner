@@ -106,6 +106,27 @@ export function useKeyboardShortcuts() {
     // Ctrl+K for command palette
     // / for search
     // ? for help
+    // Accessibility quick access: Ctrl+Alt+A
+    {
+      key: 'a',
+      ctrlKey: true,
+      altKey: true,
+      description: 'Open Accessibility Quick Access',
+      action: () => {
+        try {
+          (window as any).__accessibility?.openPanel?.();
+        } catch (e) {
+          console.debug('openPanel failed', e);
+        }
+        // Signal other parts of the app (e.g., QuickAccessPanel) that the shortcut opened accessibility
+        try {
+          window.dispatchEvent(new CustomEvent('keyboard-shortcut:open-accessibility'));
+        } catch (e) {
+          // ignore
+        }
+      },
+      category: 'Tools',
+    },
   ];
 
   const handleKeyPress = useCallback(
@@ -166,6 +187,7 @@ export function useAvailableShortcuts() {
     
     // Tools
     { key: 'k', ctrlKey: true, description: 'Command Palette', action: () => {}, category: 'Tools' },
+    { key: 'a', ctrlKey: true, altKey: true, description: 'Open Accessibility Quick Access', action: () => {}, category: 'Tools' },
     { key: '/', description: 'Search', action: () => {}, category: 'Tools' },
     { key: '?', shiftKey: true, description: 'Show Help', action: () => {}, category: 'Tools' },
     { key: 'Escape', description: 'Close Modal/Dialog', action: () => {}, category: 'Tools' },

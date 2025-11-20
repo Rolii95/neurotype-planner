@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useHaptics, useSoundEffects } from '../contexts/ThemeContext';
+import { useToast } from '../contexts/ToastContext';
 
 const Settings: React.FC = () => {
   const {
@@ -26,6 +27,7 @@ const Settings: React.FC = () => {
 
   const haptics = useHaptics();
   const sounds = useSoundEffects();
+  const toast = useToast();
 
   const handleThemeChange = (newTheme: typeof theme) => {
     setTheme(newTheme);
@@ -84,29 +86,26 @@ const Settings: React.FC = () => {
               </div>
             </div>
 
-            {/* High Contrast */}
+            {/* High Contrast (managed via Quick Access) */}
             <div className="flex items-center justify-between">
               <div>
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   High Contrast Mode
                 </label>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  Increases contrast for better readability (WCAG AAA)
+                  Manage accessibility options from the <strong>Accessibility</strong> Quick Access panel in the top bar.
+                  <br />
+                  <span className="text-xs text-gray-400">Tip: Press <kbd className="px-1.5 py-0.5 rounded border">Ctrl</kbd>+<kbd className="px-1.5 py-0.5 rounded border">Alt</kbd>+<kbd className="px-1.5 py-0.5 rounded border">A</kbd> to open Accessibility from anywhere.</span>
                 </p>
               </div>
               <button
-                onClick={() => handleToggle(setHighContrast, highContrast)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors btn-press ${
-                  highContrast ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
-                }`}
-                role="switch"
-                aria-checked={highContrast}
+                onClick={() => {
+                  try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); }
+                  toast?.info('Opened Accessibility Quick Access');
+                }}
+                className="px-3 py-2 rounded-lg persona-ghost-button"
               >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    highContrast ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
+                Open Quick Access
               </button>
             </div>
 
@@ -139,87 +138,57 @@ const Settings: React.FC = () => {
           </h2>
 
           <div className="space-y-6">
-            {/* Font Size */}
+            {/* Font Size (managed via Quick Access) */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 Font Size
               </label>
-              <div className="grid grid-cols-4 gap-2">
-                {['small', 'medium', 'large', 'x-large'].map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => {
-                      setFontSize(size as typeof fontSize);
-                      haptics.light();
-                    }}
-                    className={`p-3 rounded-lg border-2 transition-all btn-press ${
-                      fontSize === size
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-                    }`}
-                  >
-                    <div className={`font-medium ${
-                      size === 'small' ? 'text-xs' :
-                      size === 'medium' ? 'text-sm' :
-                      size === 'large' ? 'text-base' :
-                      'text-lg'
-                    }`}>
-                      {size === 'x-large' ? 'XL' : size.charAt(0).toUpperCase()}
-                    </div>
-                  </button>
-                ))}
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Set base font size from the <strong>Accessibility</strong> Quick Access panel in the top bar.
+              </p>
+              <div className="mt-2">
+                <button
+                  onClick={() => { try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); } toast?.info('Opened Accessibility Quick Access'); }}
+                  className="px-3 py-2 rounded-lg persona-ghost-button"
+                >
+                  Open Quick Access
+                </button>
               </div>
             </div>
 
-            {/* Dyslexia Font */}
+            {/* Dyslexia Font (managed via Quick Access) */}
             <div className="flex items-center justify-between">
               <div>
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Dyslexia-Friendly Font
                 </label>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  Uses OpenDyslexic font for better readability
+                  Enable the dyslexia-friendly font from the <strong>Accessibility</strong> Quick Access panel in the top bar.
                 </p>
               </div>
               <button
-                onClick={() => handleToggle(setDyslexiaFont, dyslexiaFont)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors btn-press ${
-                  dyslexiaFont ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
-                }`}
-                role="switch"
-                aria-checked={dyslexiaFont}
+                onClick={() => { try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); } toast?.info('Opened Accessibility Quick Access'); }}
+                className="px-3 py-2 rounded-lg persona-ghost-button"
               >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    dyslexiaFont ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
+                Open Quick Access
               </button>
             </div>
 
-            {/* Reading Mode */}
+            {/* Reading Mode (managed via Quick Access) */}
             <div className="flex items-center justify-between">
               <div>
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Reading Mode
                 </label>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  Optimizes text width and spacing for comfortable reading
+                  Toggle reading mode from the <strong>Accessibility</strong> Quick Access panel in the top bar.
                 </p>
               </div>
               <button
-                onClick={() => handleToggle(setReadingMode, readingMode)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors btn-press ${
-                  readingMode ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
-                }`}
-                role="switch"
-                aria-checked={readingMode}
+                onClick={() => { try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); } toast?.info('Opened Accessibility Quick Access'); }}
+                className="px-3 py-2 rounded-lg persona-ghost-button"
               >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    readingMode ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
+                Open Quick Access
               </button>
             </div>
           </div>

@@ -11,6 +11,18 @@ import { SmartSuggestion } from '../../types';
 // Mock dependencies (Vitest)
 vi.mock('../services/adaptiveSmartAPI');
 vi.mock('../services/deviceUtils');
+vi.mock('../../../../contexts/AuthContext', () => ({
+  useAuth: () => ({
+    user: { id: 'test-user', email: 'test@example.com' },
+    session: null,
+    profile: null,
+    isLoading: false,
+    signIn: vi.fn(),
+    signUp: vi.fn(),
+    signOut: vi.fn(),
+    updateProfile: vi.fn()
+  })
+}));
 
 // Test wrapper component
 function TestWrapper({ children }: { children: React.ReactNode }) {

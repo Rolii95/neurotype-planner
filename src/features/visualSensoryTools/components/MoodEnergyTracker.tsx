@@ -90,6 +90,7 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
   const [selectedPeriod, setSelectedPeriod] = useState<'day' | 'week' | 'month'>('week');
   const [currentTag, setCurrentTag] = useState('');
   const [currentTrigger, setCurrentTrigger] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Get trend data
   const trendData = useMemo(() => {
@@ -214,6 +215,7 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
   };
 
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     try {
       await addMoodEntry({
         mood: newEntry.mood,
@@ -244,6 +246,18 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
       setShowAdvanced(false);
     } catch (error) {
       console.error('Failed to save mood entry:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSliderKey = (
+    field: 'mood' | 'energy' | 'focus',
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    const value = Number(event.key);
+    if (!Number.isNaN(value) && value >= 1 && value <= 5) {
+      handleSliderChange(field, value);
     }
   };
 
@@ -274,15 +288,22 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
           
           {/* Period selector */}
           {showChart && (
-            <select
-              value={selectedPeriod}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPeriod(e.target.value as 'day' | 'week' | 'month')}
-              className="text-sm border rounded px-2 py-1"
-            >
-              <option value="day">Today</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
-            </select>
+            <>
+              <label htmlFor="trend-period" className="sr-only">
+                Trend period
+              </label>
+              <select
+                id="trend-period"
+                aria-label="Select period for mood trends"
+                value={selectedPeriod}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPeriod(e.target.value as 'day' | 'week' | 'month')}
+                className="text-sm border rounded px-2 py-1"
+              >
+                <option value="day">Today</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+              </select>
+            </>
           )}
         </div>
       </div>
@@ -301,7 +322,7 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             <FaceSmileIcon className="h-4 w-4 inline mr-1" />
-            How are you feeling?
+            How do you feel?
           </label>
           <div className="flex gap-2 justify-center">
             {MOOD_EMOJIS.map((item) => (
@@ -336,6 +357,7 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
               max="5"
               value={newEntry.mood}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSliderChange('mood', parseInt(e.target.value))}
+              onKeyDown={(event) => handleSliderKey('mood', event)}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               aria-label="Mood level"
             />
@@ -357,6 +379,7 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
               max="5"
               value={newEntry.energy}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSliderChange('energy', parseInt(e.target.value))}
+              onKeyDown={(event) => handleSliderKey('energy', event)}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               aria-label="Energy level"
             />
@@ -378,6 +401,7 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
               max="5"
               value={newEntry.focus}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSliderChange('focus', parseInt(e.target.value))}
+              onKeyDown={(event) => handleSliderKey('focus', event)}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               aria-label="Focus level"
             />
@@ -498,10 +522,10 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
         <div className="flex justify-end">
           <button
             onClick={handleSubmit}
-            disabled={isLoading}
+            disabled={isLoading || isSubmitting}
             className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
           >
-            {isLoading ? 'Saving...' : 'Save Entry'}
+            {isLoading || isSubmitting ? 'Saving...' : 'Save Entry'}
           </button>
         </div>
       </div>
@@ -674,3 +698,6 @@ export const MoodEnergyTracker: React.FC<MoodEnergyTrackerProps> = ({
     </div>
   );
 };
+
+
+

@@ -235,14 +235,38 @@ export const RoutineVisualBoard: React.FC<RoutineVisualBoardProps> = ({
 
   if (!currentRoutine) {
     return (
-      <div className="text-center py-12">
-        <div className="text-gray-500 mb-4">No routine selected</div>
-        <button
-          onClick={() => {/* TODO: Open routine selection */}}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Select a Routine
-        </button>
+      <div className="max-w-3xl mx-auto p-4">
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold text-gray-900">Routine Visual Board</h2>
+          <p className="text-sm text-gray-500">Create your first routine to get started.</p>
+        </div>
+
+        <div className="mb-6">
+          <div className="flex justify-between text-sm text-gray-600 mb-1">
+            <span>Progress</span>
+            <span>0/0 steps</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: '0%' }}
+              role="progressbar"
+              aria-valuenow={0}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            />
+          </div>
+        </div>
+
+        <div className="text-center py-12">
+          <div className="text-gray-500 mb-4">No routine selected</div>
+          <button
+            onClick={() => {/* TODO: Open routine selection */}}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Select a Routine
+          </button>
+        </div>
       </div>
     );
   }
@@ -269,18 +293,16 @@ export const RoutineVisualBoard: React.FC<RoutineVisualBoardProps> = ({
 
           {showControls && !readonly && (
             <div className="flex items-center gap-2">
-              {/* Accessibility Toggle */}
+              {/* Accessibility Toggle (opens centralized Quick Access) */}
               <button
-                onClick={() => setAccessibilitySettings(prev => ({
-                  ...prev,
-                  highContrast: !prev.highContrast
-                }))}
+                onClick={() => { try { (window as any).__accessibility?.openPanel?.(); } catch (e) { console.debug('openPanel failed', e); } }}
                 className={`p-2 rounded-md border ${
                   accessibilitySettings.highContrast 
                     ? 'bg-yellow-100 border-yellow-300' 
                     : 'bg-white border-gray-300'
                 } hover:bg-gray-50`}
-                aria-label="Toggle high contrast mode"
+                aria-label="Open accessibility quick access"
+                title="Open Accessibility Quick Access"
               >
                 <AdjustmentsHorizontalIcon className="h-5 w-5" />
               </button>

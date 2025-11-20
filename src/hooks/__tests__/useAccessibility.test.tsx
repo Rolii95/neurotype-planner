@@ -163,27 +163,6 @@ describe('useAccessibility Hook', () => {
 
   describe('Screen Reader Announcements', () => {
     it('creates and manages aria-live region for announcements', () => {
-      let mockLiveRegion: HTMLElement | null = null;
-
-      // Mock createElement and appendChild
-      const originalCreateElement = document.createElement;
-      const originalAppendChild = document.body.appendChild;
-
-      document.createElement = vi.fn((tagName: string) => {
-        if (tagName === 'div') {
-          mockLiveRegion = originalCreateElement.call(document, 'div');
-          return mockLiveRegion;
-        }
-        return originalCreateElement.call(document, tagName);
-      });
-
-      document.body.appendChild = vi.fn().mockImplementation((child: Node) => {
-        if (child === mockLiveRegion) {
-          return child;
-        }
-        return originalAppendChild.call(document.body, child);
-      }) as any;
-
       const TestComponent = () => {
         const { announceToScreenReader } = useAccessibility();
         return (
@@ -197,14 +176,12 @@ describe('useAccessibility Hook', () => {
 
       fireEvent.click(screen.getByText('Make Announcement'));
 
-      expect(document.createElement).toHaveBeenCalledWith('div');
-      expect(mockLiveRegion).toHaveAttribute('aria-live', 'polite');
-      expect(mockLiveRegion).toHaveAttribute('aria-atomic', 'true');
-      expect(mockLiveRegion).toHaveClass('sr-only');
-
-      // Restore original methods
-      document.createElement = originalCreateElement;
-      document.body.appendChild = originalAppendChild;
+      const liveRegion = document.getElementById('accessibility-announcements');
+      expect(liveRegion).not.toBeNull();
+      expect(liveRegion).toHaveAttribute('aria-live', 'polite');
+      expect(liveRegion).toHaveAttribute('aria-atomic', 'true');
+      expect(liveRegion).toHaveClass('sr-only');
+      expect(liveRegion).toHaveTextContent('Test announcement');
     });
 
     it('queues multiple announcements and speaks them sequentially', async () => {
@@ -257,7 +234,12 @@ describe('useAccessibility Hook', () => {
       // Mock focusElement
       Object.defineProperty(document, 'querySelector', {
         writable: true,
-        value: vi.fn(() => ({ focus: mockFocusElement }))
+        value: vi.fn(() => ({
+          focus: mockFocusElement,
+          getAttribute: vi.fn(() => null),
+          textContent: 'Mock element',
+          id: 'mock-element'
+        }))
       });
 
       render(<TestComponent />);
@@ -484,7 +466,12 @@ describe('useAccessibility Hook', () => {
 
   describe('Focus Management', () => {
     it('focuses elements by selector', () => {
-      const mockElement = { focus: vi.fn() };
+      const mockElement = {
+        focus: vi.fn(),
+        getAttribute: vi.fn(() => null),
+        textContent: 'Mock element',
+        id: 'mock-element'
+      };
       
       Object.defineProperty(document, 'querySelector', {
         writable: true,
@@ -509,7 +496,12 @@ describe('useAccessibility Hook', () => {
     });
 
     it('announces focus changes when requested', () => {
-      const mockElement = { focus: vi.fn(), id: 'test-element' };
+      const mockElement = {
+        focus: vi.fn(),
+        id: 'test-element',
+        getAttribute: vi.fn(() => 'Mock label'),
+        textContent: 'Mock element'
+      };
       
       Object.defineProperty(document, 'querySelector', {
         writable: true,

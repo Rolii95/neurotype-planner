@@ -91,6 +91,8 @@ const NotificationActionListener: React.FC = () => {
 };
 
 const AppContent: React.FC = () => {
+  // This component is no longer the outer-most renderer for providers.
+  // It will be mounted inside the heavy provider stack once auth is resolved.
   const { user, isLoading: authLoading, signIn, signUp } = useAuth();
   const toast = useToast();
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean | null>(null);
@@ -323,9 +325,9 @@ const AppContent: React.FC = () => {
     return <OnboardingFlow onComplete={handleOnboardingComplete} />;
   }
 
-  // Show main app
+  // Show main app (this path is only reached when user is authenticated)
   return (
-    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <>
       <NotificationActionListener />
       <ActivityTracker>
         <MainLayout>
@@ -359,33 +361,110 @@ const AppContent: React.FC = () => {
           <FloatingTimerWidget />
         </MainLayout>
       </ActivityTracker>
-    </Router>
+    </>
+  );
+};
+
+// Heavy providers that should only mount once auth state is known
+const HeavyProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <I18nProvider>
+        <ThemeProvider>
+          <AccessibilityProvider>
+            <ToastProvider>
+              <ConfirmProvider>
+                <TimerProvider>
+                  <AdaptiveSmartProvider>
+                    {children}
+                    <PWAInstaller />
+                  </AdaptiveSmartProvider>
+                </TimerProvider>
+              </ConfirmProvider>
+            </ToastProvider>
+          </AccessibilityProvider>
+        </ThemeProvider>
+      </I18nProvider>
+    </QueryClientProvider>
+  );
+};
+
+// Auth-aware shell: light-weight routing and unauthenticated UI do NOT mount heavy providers.
+const AuthAwareShell: React.FC = () => {
+  const { user, isLoading: authLoading, signIn, signUp } = useAuth();
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean | null>(null);
+  const [checkingOnboarding, setCheckingOnboarding] = useState(true);
+
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      if (!user) {
+        setCheckingOnboarding(false);
+        return;
+      }
+
+      try {
+        const completed = await onboardingService.hasCompletedOnboarding(user.id);
+        setHasCompletedOnboarding(completed);
+      } catch (error) {
+        console.error('Error checking onboarding status:', error);
+        setHasCompletedOnboarding(false);
+      } finally {
+        setCheckingOnboarding(false);
+      }
+    };
+
+    checkOnboardingStatus();
+  }, [user]);
+
+  // While auth is resolving, show a minimal loading UI
+  if (authLoading || checkingOnboarding) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // If not authenticated, render the lightweight unauthenticated routes/UI
+  if (!user) {
+    return (
+      <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50"><LoadingSpinner size="large"/></div>}>
+        <Routes>
+          <Route path="/demo" element={<FeatureDemoPage />} />
+          <Route path="*" element={
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+              <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full mx-4">
+                <div className="text-center mb-8">
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">Universal Neurotype Planner</h1>
+                  <p className="text-gray-600">Your adaptive executive function support tool</p>
+                </div>
+                <div className="space-y-4">
+                  <a href="/demo" className="block w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-medium transition-colors text-center">🧠 View Feature Demo</a>
+                </div>
+              </div>
+            </div>
+          } />
+        </Routes>
+      </React.Suspense>
+    );
+  }
+
+  // User exists: mount heavy providers and then render the full app content inside them
+  return (
+    <HeavyProviders>
+      <AppContent />
+    </HeavyProviders>
   );
 };
 
 const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <I18nProvider>
-            <ThemeProvider>
-              <AccessibilityProvider>
-                <ToastProvider>
-                  <ConfirmProvider>
-                    <TimerProvider>
-                      <AdaptiveSmartProvider>
-                        <AppContent />
-                        <PWAInstaller />
-                      </AdaptiveSmartProvider>
-                    </TimerProvider>
-                  </ConfirmProvider>
-                </ToastProvider>
-              </AccessibilityProvider>
-            </ThemeProvider>
-          </I18nProvider>
-        </AuthProvider>
-      </QueryClientProvider>
+      <AuthProvider>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <AuthAwareShell />
+        </Router>
+      </AuthProvider>
     </ErrorBoundary>
   );
 };
