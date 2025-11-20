@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { DataExportImport } from '../components/DataExportImport';
 import { NotificationSettingsPanel } from '../components/Notifications/NotificationSettingsPanel';
+import MetricsConsent from '../components/Settings/MetricsConsent';
 
 const MoonIcon = ({ className = '' }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -276,7 +277,10 @@ export default function SettingsPage() {
 
         {/* Data & Backup Tab */}
         {activeTab === 'data' && (
-          <DataExportImport />
+          <div className="space-y-6">
+            <MetricsConsent />
+            <DataExportImport />
+          </div>
         )}
 
       </div>

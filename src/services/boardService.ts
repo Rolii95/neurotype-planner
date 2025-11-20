@@ -1,5 +1,7 @@
 import { supabase } from './supabase';
 import { notificationService } from './notifications';
+import * as metrics from './metrics';
+import { getAllOffline } from './indexedQueue';
 
 export interface Board {
   id: string;
@@ -157,6 +159,8 @@ class BoardService {
   // ==================== BOARD CRUD ====================
   
   async createBoard(input: CreateBoardInput): Promise<Board | null> {
+    const timerId = metrics.startTimer('board.create');
+    metrics.incrementCounter('board.create.attempts');
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
@@ -238,9 +242,18 @@ class BoardService {
         }).catch((e) => console.warn('Failed to update pending notification:', e));
       }
 
+      metrics.incrementCounter('board.create.success');
+      metrics.endTimer(timerId, { boardId: board?.id });
       return board;
     } catch (error) {
       console.error('Error creating board:', error);
+      metrics.incrementCounter('board.create.failures');
+      try {
+        const all = await getAllOffline();
+        metrics.recordEvent('board.create.failure', { error: (error instanceof Error ? error.message : error), offlineQueueLength: all.length });
+      } catch (e) {
+        metrics.recordEvent('board.create.failure', { error: (error instanceof Error ? error.message : error) });
+      }
       // show a failure notification if not already created
       try {
         await notificationService.createNotification({
@@ -251,11 +264,14 @@ class BoardService {
           actionable: false,
         });
       } catch (e) { console.warn('Failed to create failure notification:', e); }
+      metrics.endTimer(timerId, { failed: true });
       return null;
     }
   }
 
   async getBoard(boardId: string): Promise<{ board: Board; steps: BoardStep[] } | null> {
+    const timerId = metrics.startTimer('board.get');
+    metrics.incrementCounter('board.get.attempts');
     try {
       const [{ data: board, error: boardError }, { data: steps, error: stepsError }] = await Promise.all([
         supabase.from('boards').select('*').eq('id', boardId).single(),
@@ -264,15 +280,21 @@ class BoardService {
 
       if (boardError || stepsError) throw boardError || stepsError;
       if (!board) return null;
-
+      metrics.incrementCounter('board.get.success');
+      metrics.endTimer(timerId, { boardId });
       return { board, steps: steps || [] };
     } catch (error) {
       console.error('Error fetching board:', error);
+      metrics.incrementCounter('board.get.failures');
+      metrics.recordEvent('board.get.failure', { error: (error instanceof Error ? error.message : error), boardId });
+      metrics.endTimer(timerId, { failed: true });
       return null;
     }
   }
 
   async getUserBoards(userId?: string): Promise<Board[]> {
+    const timerId = metrics.startTimer('board.getUserBoards');
+    metrics.incrementCounter('board.getUserBoards.attempts');
     try {
       const { data: { user } } = await supabase.auth.getUser();
       const targetUserId = userId || user?.id;
@@ -287,9 +309,14 @@ class BoardService {
         .order('updated_at', { ascending: false });
 
       if (error) throw error;
+      metrics.incrementCounter('board.getUserBoards.success');
+      metrics.endTimer(timerId, { count: (data || []).length });
       return data || [];
     } catch (error) {
       console.error('Error fetching user boards:', error);
+      metrics.incrementCounter('board.getUserBoards.failures');
+      metrics.recordEvent('board.getUserBoards.failure', { error: (error instanceof Error ? error.message : error) });
+      metrics.endTimer(timerId, { failed: true });
       return [];
     }
   }
@@ -422,6 +449,8 @@ class BoardService {
   // ==================== BOARD STEPS ====================
 
   async addStepsToBoard(boardId: string, steps: Omit<BoardStep, 'id' | 'board_id' | 'created_at' | 'updated_at'>[]): Promise<BoardStep[]> {
+    const timerId = metrics.startTimer('board.addSteps');
+    metrics.incrementCounter('board.addSteps.attempts');
     try {
       const stepsData = steps.map((step, index) => ({
         ...step,
@@ -435,9 +464,14 @@ class BoardService {
         .select();
 
       if (error) throw error;
+      metrics.incrementCounter('board.addSteps.success');
+      metrics.endTimer(timerId, { added: data?.length ?? 0 });
       return data || [];
     } catch (error) {
       console.error('Error adding steps:', error);
+      metrics.incrementCounter('board.addSteps.failures');
+      metrics.recordEvent('board.addSteps.failure', { error: (error instanceof Error ? error.message : error), boardId });
+      metrics.endTimer(timerId, { failed: true });
       return [];
     }
   }
@@ -495,6 +529,8 @@ class BoardService {
   // ==================== BOARD EXECUTION ====================
 
   async startExecution(boardId: string): Promise<BoardExecution | null> {
+    const timerId = metrics.startTimer('board.startExecution');
+    metrics.incrementCounter('board.startExecution.attempts');
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
@@ -511,9 +547,14 @@ class BoardService {
         .single();
 
       if (error) throw error;
+      metrics.incrementCounter('board.startExecution.success');
+      metrics.endTimer(timerId, { executionId: data?.id });
       return data;
     } catch (error) {
       console.error('Error starting execution:', error);
+      metrics.incrementCounter('board.startExecution.failures');
+      metrics.recordEvent('board.startExecution.failure', { error: (error instanceof Error ? error.message : error), boardId });
+      metrics.endTimer(timerId, { failed: true });
       return null;
     }
   }

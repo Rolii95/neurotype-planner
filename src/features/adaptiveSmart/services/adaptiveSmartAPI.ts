@@ -16,16 +16,9 @@ class AdaptiveSmartAPIService {
     await this.delay();
 
     try {
-      if (isSupabaseDemoMode || !supabase) {
-        // Fallback to localStorage in demo mode
-        const stored = this.getStoredActivities();
-        stored.push(activity);
-        if (stored.length > 1000) stored.splice(0, stored.length - 1000);
-        localStorage.setItem('adaptiveSmart_activities', JSON.stringify(stored));
-        return;
-      }
-
-      // Use supabaseService helper for user_activity table to keep behavior consistent
+      // Delegate to the storage adapter via supabaseService. In demo mode the DemoStorage
+      // implementation will enqueue activities to IndexedDB; in production the SupabaseStorage
+      // implementation will persist directly to the `user_activity` table.
       const durationMinutes =
         activity.durationMinutes ?? (activity.context?.duration ? Math.round((activity.context.duration as number) / 60) : 0);
 

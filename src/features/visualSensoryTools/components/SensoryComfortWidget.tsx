@@ -467,7 +467,6 @@ export const SensoryComfortWidget: React.FC<SensoryComfortWidgetProps> = ({
                     onSetLargeText={setLargeTextMode}
                     isLoading={isLoading || isSaving}
                     compact={compact}
-                    isLoading={isLoading || isSaving}
                   />
                 </Dialog.Panel>
               </Transition.Child>

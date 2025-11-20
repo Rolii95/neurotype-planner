@@ -5,6 +5,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AccessibilityProvider } from './contexts/AccessibilityContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider, useToast } from './contexts/ToastContext';
+import ActivityLogProvider from './contexts/ActivityLogContext';
+import { StorageProvider } from './contexts/StorageProvider';
+import { ActivityLogDrawer } from './components/ActivityLog/ActivityLogDrawer';
 import { ConfirmProvider } from './contexts/ConfirmContext';
 import { TimerProvider } from './contexts/TimerContext';
 import { I18nProvider } from './i18n/index';
@@ -18,7 +21,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { PWAInstaller } from './components/PWAInstaller';
 import type { NotificationAction } from './services/notifications';
-import { useMatrixStore } from './stores/useMatrixStore';
+import { useMatrixStore, initializeMatrixStore } from './stores/useMatrixStore';
 
 // Lazy load pages for better performance
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
@@ -37,6 +40,7 @@ const BoardsPage = React.lazy(() => import('./pages/BoardsPage'));
 const BoardDetailPage = React.lazy(() => import('./pages/BoardDetailPage'));
 const BoardExecutionView = React.lazy(() => import('./pages/BoardExecutionView'));
 const AIAssistant = React.lazy(() => import('./pages/AIAssistant'));
+const MetricsAdmin = React.lazy(() => import('./pages/Admin/MetricsAdmin'));
 
 // Create a client outside component to prevent recreation on every render
 const queryClient = new QueryClient({
@@ -95,6 +99,9 @@ const AppContent: React.FC = () => {
   // It will be mounted inside the heavy provider stack once auth is resolved.
   const { user, isLoading: authLoading, signIn, signUp } = useAuth();
   const toast = useToast();
+  const [storeInitializing, setStoreInitializing] = useState(true);
+  const [storeInitErrorCount, setStoreInitErrorCount] = useState(0);
+  const [storeInitError, setStoreInitError] = useState<string | null>(null);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean | null>(null);
   const [checkingOnboarding, setCheckingOnboarding] = useState(true);
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -127,6 +134,68 @@ const AppContent: React.FC = () => {
     };
 
     checkOnboardingStatus();
+  }, [user]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const initStore = async () => {
+      if (!user) {
+        if (mounted) setStoreInitializing(false);
+        return;
+      }
+
+      try {
+        console.log('Initializing matrix store after auth...');
+
+        // Start initialization and race against a 10s timeout.
+        const initPromise = initializeMatrixStore();
+        // Catch background errors to surface retry UI when initialization fails repeatedly
+        initPromise.catch((err) => {
+          console.error('Background initializeMatrixStore() failed:', err);
+          if (mounted) {
+            setStoreInitError(String((err as any)?.message ?? err));
+            setStoreInitErrorCount((c) => c + 1);
+          }
+        });
+        const timeoutMs = 10000;
+        const timeoutPromise = new Promise<string>((resolve) => {
+          setTimeout(() => resolve('timeout'), timeoutMs);
+        });
+
+        const result = await Promise.race([initPromise.then(() => 'ready').catch(() => 'error'), timeoutPromise]);
+
+        if (result === 'timeout') {
+          console.warn(`initializeMatrixStore() timed out after ${timeoutMs}ms — continuing initialization in background.`);
+          // Let the initialization continue in background and log any errors.
+          // errors already handled above via catch
+        } else if (result === 'error') {
+          console.error('initializeMatrixStore() failed during startup.');
+          if (mounted) {
+            setStoreInitError('Initialization failed');
+            setStoreInitErrorCount((c) => c + 1);
+          }
+        } else {
+          console.log('Matrix store initialized');
+          if (mounted) {
+            setStoreInitError(null);
+            setStoreInitErrorCount(0);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to initialize matrix store:', err);
+        if (mounted) {
+          setStoreInitError(String((err as any)?.message ?? err));
+          setStoreInitErrorCount((c) => c + 1);
+        }
+      } finally {
+        if (mounted) setStoreInitializing(false);
+      }
+    };
+
+    initStore();
+
+    return () => { mounted = false; };
   }, [user]);
 
   // Memoize loading spinner to prevent unnecessary re-renders
@@ -168,8 +237,8 @@ const AppContent: React.FC = () => {
     }
   };
 
-  // Show loading while checking auth or onboarding status
-  if (authLoading || checkingOnboarding) {
+  // Show loading while checking auth, onboarding status, or store initialization
+  if (authLoading || checkingOnboarding || storeInitializing) {
     console.log('📊 Loading state:', { authLoading, checkingOnboarding, user: user?.id });
     return loadingFallback;
   }
@@ -329,6 +398,40 @@ const AppContent: React.FC = () => {
   return (
     <>
       <NotificationActionListener />
+      {/* Show retry banner when initialization has failed repeatedly */}
+      {storeInitErrorCount >= 2 && (
+        <div className="max-w-7xl mx-auto px-4 py-2">
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-yellow-800">Sync issue</p>
+                <p className="text-xs text-yellow-700">We had trouble finishing the initial sync. You can try again now.</p>
+              </div>
+              <div>
+                <button
+                  onClick={async () => {
+                    try {
+                      setStoreInitializing(true);
+                      await initializeMatrixStore();
+                      setStoreInitError(null);
+                      setStoreInitErrorCount(0);
+                    } catch (err) {
+                      console.error('Retry initializeMatrixStore failed:', err);
+                      setStoreInitError(String((err as any)?.message ?? err));
+                      setStoreInitErrorCount((c) => c + 1);
+                    } finally {
+                      setStoreInitializing(false);
+                    }
+                  }}
+                  className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-sm"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <ActivityTracker>
         <MainLayout>
           <React.Suspense fallback={loadingFallback}>
@@ -348,6 +451,7 @@ const AppContent: React.FC = () => {
               <Route path="/ai-assistant" element={<AIAssistant />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/admin/metrics" element={<MetricsAdmin />} />
               <Route path="/collaboration" element={<Collaboration />} />
               <Route path="/demo" element={<FeatureDemoPage />} />
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
@@ -373,14 +477,19 @@ const HeavyProviders: React.FC<{ children: React.ReactNode }> = ({ children }) =
         <ThemeProvider>
           <AccessibilityProvider>
             <ToastProvider>
-              <ConfirmProvider>
-                <TimerProvider>
-                  <AdaptiveSmartProvider>
-                    {children}
-                    <PWAInstaller />
-                  </AdaptiveSmartProvider>
-                </TimerProvider>
-              </ConfirmProvider>
+              <ActivityLogProvider>
+                <StorageProvider>
+                  <ConfirmProvider>
+                    <TimerProvider>
+                      <AdaptiveSmartProvider>
+                        {children}
+                        <PWAInstaller />
+                        <ActivityLogDrawer />
+                      </AdaptiveSmartProvider>
+                    </TimerProvider>
+                  </ConfirmProvider>
+                </StorageProvider>
+              </ActivityLogProvider>
             </ToastProvider>
           </AccessibilityProvider>
         </ThemeProvider>

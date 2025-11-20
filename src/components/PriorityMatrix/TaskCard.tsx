@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, forwardRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMatrixStore } from '../../stores/useMatrixStore';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
@@ -159,7 +160,22 @@ const TaskCardComponent: React.ForwardRefRenderFunction<HTMLDivElement, TaskCard
       event.preventDefault();
       const { setTimeBlockingTarget } = useMatrixStore.getState();
       setTimeBlockingTarget({ taskId: task.id });
-      window.dispatchEvent(new CustomEvent('open-tool', { detail: { tool: 'time-blocking' } }));
+      const openTool = (detail?: any) => {
+        try {
+          (window as any).__openTool?.('time-blocking', detail);
+        } catch (e) {
+          // best-effort
+        }
+      };
+      openTool();
+      // If dashboard isn't mounted, navigate there and re-dispatch after a short delay
+      if (window.location.pathname !== '/dashboard') {
+        // useNavigate is available below via hook
+        // noop here; the actual navigate call is done in the click handlers where hooks are available
+        setTimeout(() => openTool(), 200);
+      } else {
+        setTimeout(() => openTool(), 50);
+      }
     }
   };
   
@@ -175,6 +191,8 @@ const TaskCardComponent: React.ForwardRefRenderFunction<HTMLDivElement, TaskCard
     className
   ].filter(Boolean).join(' ');
   
+  const navigate = useNavigate();
+
   return (
     <div
       ref={(node: HTMLDivElement | null) => {
@@ -318,7 +336,20 @@ const TaskCardComponent: React.ForwardRefRenderFunction<HTMLDivElement, TaskCard
                 e.stopPropagation();
                 const { setTimeBlockingTarget } = useMatrixStore.getState();
                 setTimeBlockingTarget({ taskId: task.id });
-                window.dispatchEvent(new CustomEvent('open-tool', { detail: { tool: 'time-blocking' } }));
+                const openTool = (detail?: any) => {
+                  try {
+                    (window as any).__openTool?.('time-blocking', detail);
+                  } catch (e) {
+                    // noop
+                  }
+                };
+                openTool();
+                if (window.location.pathname !== '/dashboard') {
+                  navigate('/dashboard');
+                  setTimeout(() => openTool(), 180);
+                } else {
+                  setTimeout(() => openTool(), 50);
+                }
               }}
               className="ml-2 p-1 rounded hover:bg-gray-100 text-slate-600"
               title="Schedule task"
@@ -335,10 +366,35 @@ const TaskCardComponent: React.ForwardRefRenderFunction<HTMLDivElement, TaskCard
           {/* Scheduled Time - show if task has a time block */}
           {timeBlock && (
             <div className="flex items-center gap-1 bg-blue-50 text-blue-700 px-2 py-1 rounded font-medium">
-              <CalendarIcon className="w-3 h-3" />
-              <span>
-                {format(parseISO(timeBlock.startTime), 'MMM d, h:mm a')} - {format(parseISO(timeBlock.endTime), 'h:mm a')}
-              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const { setTimeBlockingTarget } = useMatrixStore.getState();
+                  setTimeBlockingTarget({ taskId: task.id });
+                  const openTool = (detail?: any) => {
+                    try {
+                      (window as any).__openTool?.('time-blocking', detail);
+                    } catch (e) {
+                      // noop
+                    }
+                  };
+                  openTool();
+                  if (window.location.pathname !== '/dashboard') {
+                      navigate('/dashboard');
+                      setTimeout(() => openTool(), 180);
+                  } else {
+                      setTimeout(() => openTool(), 50);
+                  }
+                }}
+                className="inline-flex items-center gap-1"
+                aria-label="Open time-blocking for this task"
+                title="Open time-blocking for this task"
+              >
+                <CalendarIcon className="w-3 h-3" />
+                <span>
+                  {format(parseISO(timeBlock.startTime), 'MMM d, h:mm a')} - {format(parseISO(timeBlock.endTime), 'h:mm a')}
+                </span>
+              </button>
             </div>
           )}
           
@@ -353,8 +409,18 @@ const TaskCardComponent: React.ForwardRefRenderFunction<HTMLDivElement, TaskCard
           {/* Due Date - only show if no time block (otherwise would be redundant) */}
           {!timeBlock && task.due_date && (
             <div className="flex items-center gap-1">
-              <CalendarIcon className="w-3 h-3" />
-              <span>{format(new Date(task.due_date), 'MMM d')}</span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onEdit) onEdit(task.id);
+                }}
+                className="inline-flex items-center gap-1"
+                aria-label="Edit task due date"
+                title="Edit task"
+              >
+                <CalendarIcon className="w-3 h-3" />
+                <span>{format(new Date(task.due_date), 'MMM d')}</span>
+              </button>
             </div>
           )}
           

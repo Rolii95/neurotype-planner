@@ -120,11 +120,25 @@ export const useExposeAccessibilityAPI = (setter: (u: Partial<AccessibilitySetti
       if (el && (el as HTMLElement).click) (el as HTMLElement).click();
     };
 
+    // Global tool opener: centralize opening tools (e.g., time-blocking)
+    (window as any).__openTool = (tool: string, detail?: any) => {
+      try {
+        window.dispatchEvent(new CustomEvent('open-tool', { detail: { tool, ...(detail || {}) } }));
+      } catch (e) {
+        console.debug('window.__openTool dispatch failed', e);
+      }
+    };
+
     return () => {
       try {
         if (window.__accessibility) {
           delete window.__accessibility.set;
           delete window.__accessibility.openPanel;
+        }
+        try {
+          delete (window as any).__openTool;
+        } catch (e) {
+          // ignore
         }
       } catch (e) {
         // ignore
@@ -140,6 +154,7 @@ declare global {
       set?: (updates: Partial<AccessibilitySettings>) => void;
       openPanel?: () => void;
     };
+    __openTool?: (tool: string, detail?: any) => void;
   }
 }
 

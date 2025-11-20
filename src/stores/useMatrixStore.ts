@@ -4,6 +4,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { Task, TaskPriority } from '../types';
 import { supabaseService, getCurrentUserId } from '../services/supabase';
+import * as metrics from '../services/metrics';
+import { getAllOffline } from '../services/indexedQueue';
 import { notificationService } from '../services/notifications';
 import { buildDefaultTemplates, TaskTemplate } from '../constants/taskTemplates';
 import { TaskIntegrationService } from '../services/integrations/taskIntegrationService';
@@ -493,6 +495,14 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
             previous_quadrant: previousQuadrant ?? null,
             updated_at: new Date().toISOString(),
           });
+
+          try {
+            if (typeof window !== 'undefined' && typeof (window as any).__logActivity === 'function') {
+              (window as any).__logActivity({ type: 'task-completed', message: `Completed task: ${task.title}`, meta: { taskId: task.id } });
+            }
+          } catch (e) {
+            // ignore
+          }
         },
 
         // Periodic check for parked tasks older than 3 days and notify
@@ -535,6 +545,8 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
             state.error = null;
           });
 
+          const timerId = metrics.startTimer('matrix.syncWithSupabase');
+          metrics.incrementCounter('matrix.sync.attempts');
           try {
             const [tasks, timeBlocks, templates] = await Promise.all([
               supabaseService.getTasks(),
@@ -568,7 +580,12 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
             });
 
             get().updateAnalytics();
+            metrics.incrementCounter('matrix.sync.success');
+            metrics.endTimer(timerId, { tasksLoaded: tasks.length });
           } catch (error) {
+            metrics.incrementCounter('matrix.sync.failures');
+            metrics.recordEvent('matrix.sync.failure', { error: (error instanceof Error ? error.message : error) });
+            metrics.endTimer(timerId, { failed: true });
             set((state) => {
               state.error = error instanceof Error ? error.message : 'Failed to sync with database';
               state.isLoading = false;
@@ -797,6 +814,13 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
               recurrence_rule: null,
               color: '#3B82F6'
             });
+            try {
+              if (typeof window !== 'undefined' && typeof (window as any).__logActivity === 'function') {
+                (window as any).__logActivity({ type: 'time-block-created', message: `Scheduled "${task.title}" at ${new Date(startTime).toLocaleString()}`, meta: { taskId } });
+              }
+            } catch (e) {
+              // ignore
+            }
           } catch (error) {
             // Remove from local state if database save failed
             set((state) => {
@@ -875,6 +899,14 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
               if (!placed) continue;
             }
 
+            try {
+              if (scheduledCount > 0 && typeof window !== 'undefined' && typeof (window as any).__logActivity === 'function') {
+                (window as any).__logActivity({ type: 'auto-plan', message: `Auto-planned ${scheduledCount} task${scheduledCount === 1 ? '' : 's'}`, meta: { scheduledCount } });
+              }
+            } catch (e) {
+              // ignore
+            }
+
             return scheduledCount;
           } catch (error) {
             console.error('autoPlanFromMatrix failed:', error);
@@ -905,12 +937,29 @@ export const useMatrixStore = create<MatrixState & MatrixActions>()(
               suggestion.isApplied = true;
             }
           });
+
+          try {
+            const suggestion = get().aiSuggestions.find(s => s.id === suggestionId);
+            if (suggestion && typeof window !== 'undefined' && typeof (window as any).__logActivity === 'function') {
+              (window as any).__logActivity({ type: 'suggestion-applied', message: `Applied suggestion: ${suggestion.suggestion}`, meta: { suggestionId } });
+            }
+          } catch (e) {
+            // ignore
+          }
         },
 
         dismissAISuggestion: async (suggestionId) => {
           set((state) => {
             state.aiSuggestions = state.aiSuggestions.filter(s => s.id !== suggestionId);
           });
+
+          try {
+            if (typeof window !== 'undefined' && typeof (window as any).__logActivity === 'function') {
+              (window as any).__logActivity({ type: 'suggestion-dismissed', message: `Dismissed suggestion`, meta: { suggestionId } });
+            }
+          } catch (e) {
+            // ignore
+          }
         },
 
         // Templates
@@ -1245,8 +1294,28 @@ export const getTasksByQuadrant = (quadrantId: QuadrantId) => {
 export const initializeMatrixStore = async () => {
   const store = useMatrixStore.getState();
   // Ensure single initialization
-  await store.syncWithSupabase();
-  await store.initializeRealtime();
+  const initTimer = metrics.startTimer('matrix.initialize');
+  metrics.incrementCounter('matrix.init.attempts');
+  try {
+    // record offline queue size at start (best-effort)
+    try {
+      const all = await getAllOffline();
+      metrics.recordEvent('matrix.offline_queue_snapshot', { count: all.length });
+    } catch (e) {
+      // ignore failures to read IndexedDB
+    }
+
+    await store.syncWithSupabase();
+    await store.initializeRealtime();
+
+    metrics.incrementCounter('matrix.init.success');
+    metrics.endTimer(initTimer);
+  } catch (err) {
+    metrics.incrementCounter('matrix.init.failures');
+    metrics.recordEvent('matrix.initialize.failure', { error: (err instanceof Error ? err.message : err) });
+    metrics.endTimer(initTimer, { failed: true });
+    throw err;
+  }
 
   // Start deterministic parked-task checker and keep a handle for cleanup
   try {
@@ -1266,14 +1335,10 @@ export const initializeMatrixStore = async () => {
   }
 };
 
-// Initialize store on module load
+// Register cleanup on page unload (but do NOT auto-initialize the store here).
+// The application shell is responsible for calling `initializeMatrixStore()`
+// once authentication and storage adapters are ready.
 if (typeof window !== 'undefined') {
-  // Sync with Supabase when store is created
-  setTimeout(() => {
-    initializeMatrixStore().catch(console.error);
-  }, 1000);
-
-  // Cleanup on page unload
   window.addEventListener('beforeunload', () => {
     useMatrixStore.getState().cleanup();
   });
