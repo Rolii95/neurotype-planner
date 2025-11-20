@@ -23,6 +23,32 @@ const MAX_PER_WINDOW = 120; // max requests per IP per window
 // Request size limits
 const MAX_CONTENT_LENGTH_BYTES = 64 * 1024; // 64 KB
 
+// Non-blocking rejection logger: writes a structured log to console and attempts
+// to insert a small record into `app_metrics_rejections` (best-effort). If the
+// table doesn't exist or insert fails, we swallow the error to avoid breaking
+// the main request path.
+async function logRejection({ ip, reason, userId, contentLength, note }: { ip: string; reason: string; userId?: string | null; contentLength?: number | null; note?: any }) {
+  try {
+    const payload = { ip, reason, user_id: userId || null, content_length: contentLength || null, note: typeof note === 'object' ? JSON.stringify(note) : String(note || '') , created_at: new Date().toISOString() };
+    // Structured console log (captured by platform logs)
+    console.warn('metrics rejection', payload);
+
+    // Best-effort insert into a lightweight table for aggregated monitoring.
+    // This is optional — if the table isn't present, ignore the error.
+    if (supabase) {
+      supabase.from('app_metrics_rejections').insert(payload).then(() => {
+        // no-op
+      }).catch((e: any) => {
+        // don't escalate; platform logs already have the console.warn
+        console.debug('rejection log insert failed', e?.message || e);
+      });
+    }
+  } catch (e) {
+    // swallow any logging errors
+    console.debug('logRejection failed', e);
+  }
+}
+
 serve(async (req: Request) => {
   try {
     const ip = (req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || req.headers.get('x-real-ip') || 'unknown').split(',')[0].trim();
@@ -30,6 +56,8 @@ serve(async (req: Request) => {
     // content-length based early rejection
     const contentLength = req.headers.get('content-length');
     if (contentLength && Number(contentLength) > MAX_CONTENT_LENGTH_BYTES) {
+      // Log rejection (best-effort)
+      logRejection({ ip, reason: 'payload_too_large', userId: null, contentLength: Number(contentLength), note: 'content-length header exceeded' });
       return new Response(JSON.stringify({ error: 'payload_too_large' }), { status: 413 });
     }
 
@@ -45,9 +73,11 @@ serve(async (req: Request) => {
           const { done, value } = await reader.read();
           if (done) break;
           received += value.length;
-          if (received > MAX_CONTENT_LENGTH_BYTES) {
-            return new Response(JSON.stringify({ error: 'payload_too_large' }), { status: 413 });
-          }
+              if (received > MAX_CONTENT_LENGTH_BYTES) {
+                // Log streaming rejection
+                logRejection({ ip, reason: 'payload_too_large', userId: null, contentLength: received, note: 'streaming body exceeded max allowed' });
+                return new Response(JSON.stringify({ error: 'payload_too_large' }), { status: 413 });
+              }
           chunks.push(value);
         }
         const all = new Uint8Array(chunks.reduce((s, c) => s + c.length, 0));
@@ -62,6 +92,7 @@ serve(async (req: Request) => {
       }
     } catch (e) {
       console.warn('payload parse error', e);
+      logRejection({ ip, reason: 'invalid_payload', userId: null, contentLength: contentLength ? Number(contentLength) : null, note: (e as any)?.message || String(e) });
       return new Response(JSON.stringify({ error: 'invalid_payload' }), { status: 400 });
     }
     if (!payload || !payload.metrics) {
@@ -84,6 +115,8 @@ serve(async (req: Request) => {
       existing.count = 0;
     }
     if (existing.count >= MAX_PER_WINDOW) {
+      // Log rate-limited event (non-blocking)
+      logRejection({ ip, reason: 'rate_limited', userId: userId || null, contentLength: contentLength ? Number(contentLength) : null, note: `max ${MAX_PER_WINDOW} per ${WINDOW_MS}ms` });
       return new Response(JSON.stringify({ error: 'rate_limited' }), { status: 429 });
     }
 

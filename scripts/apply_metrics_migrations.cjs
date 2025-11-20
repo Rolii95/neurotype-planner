@@ -15,7 +15,10 @@ if (!dbUrl) {
 
 const migrations = [
   path.join(__dirname, '..', 'supabase', 'migrations', '20251120_add_app_metrics_table.sql'),
-  path.join(__dirname, '..', 'supabase', 'migrations', '20251120_app_metrics_views.sql')
+  path.join(__dirname, '..', 'supabase', 'migrations', '20251120_app_metrics_views.sql'),
+  path.join(__dirname, '..', 'supabase', 'migrations', '20251120_add_app_metrics_rejections.sql'),
+  path.join(__dirname, '..', 'supabase', 'migrations', '20251120_add_board_collaborators.sql'),
+  path.join(__dirname, '..', 'supabase', 'migrations', '20251120_add_template_snapshots.sql')
 ];
 
 async function run() {

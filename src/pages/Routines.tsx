@@ -22,6 +22,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useConfirm } from '../contexts/ConfirmContext';
 import { supabase } from '../services/supabase';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import { routinesApi } from '../services/routinesApi';
 import { useRoutineStore } from '../stores/routineStore';
 import RoutineHeroStats from '../components/Routines/RoutineHeroStats';
 import {
@@ -688,6 +689,7 @@ const Routines: React.FC = () => {
   const [routineOrder, setRoutineOrder] = useState<string[]>(() => loadRoutineOrder());
   const [analytics, setAnalytics] = useState<RoutineAnalyticsSummary | null>(null);
   const [isAnalyticsLoading, setIsAnalyticsLoading] = useState(false);
+  const [branchingTemplateId, setBranchingTemplateId] = useState<string | null>(null);
 
   const {
     routines,
@@ -845,6 +847,25 @@ const Routines: React.FC = () => {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unable to delete routine.';
       toast.error(message);
+    }
+  };
+
+  const handleBranchRoutineTemplate = async (templateId: string, title?: string) => {
+    setBranchingTemplateId(templateId);
+    try {
+      const res = await routinesApi.createSnapshotFromTemplate(templateId, title);
+      if (res) {
+        toast.success('Template branched to your snapshots.');
+        // Optionally navigate to snapshot editor or refresh list
+        void loadRoutines();
+      } else {
+        toast.error('Failed to branch template.');
+      }
+    } catch (e) {
+      console.error('Error branching template:', e);
+      toast.error('Error branching template.');
+    } finally {
+      setBranchingTemplateId(null);
     }
   };
 
@@ -1025,6 +1046,21 @@ const Routines: React.FC = () => {
                                 <DocumentDuplicateIcon className="h-4 w-4" />
                                 Duplicate
                               </button>
+                              {routine.isTemplate && (
+                                <button
+                                  type="button"
+                                  onClick={() => void handleBranchRoutineTemplate(routine.id, routine.title)}
+                                  disabled={branchingTemplateId === routine.id}
+                                  className="inline-flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100"
+                                >
+                                  {branchingTemplateId === routine.id ? (
+                                    <LoadingSpinner />
+                                  ) : (
+                                    <DocumentDuplicateIcon className="h-4 w-4" />
+                                  )}
+                                  Branch
+                                </button>
+                              )}
                               <button
                                 type="button"
                                 onClick={() => handleEditRoutine(routine.id)}
