@@ -437,6 +437,49 @@ export const routinesApi = {
     }
   },
 
+  // Create a user-owned snapshot of a routine template so users can branch it
+  // without modifying the original template. Snapshots are stored in
+  // `routine_snapshots` and protected by RLS.
+  async createSnapshotFromTemplate(templateId: string, title?: string): Promise<{ id: string; owner_id: string; created_at: string } | null> {
+    if (isSupabaseDemoMode || !supabase) return null;
+    try {
+      const { data: template, error } = await supabase
+        .from('routine_templates')
+        .select('*')
+        .eq('id', templateId)
+        .single();
+
+      if (error || !template) return null;
+
+      const userId = await getCurrentUserId();
+      if (!userId) return null;
+
+      const payload = {
+        template_id: templateId,
+        owner_id: userId,
+        snapshot_data: { template, steps: template.template_steps ?? [] },
+        title: title || template.name || null,
+        is_public: false,
+      };
+
+      const { data: inserted, error: insertError } = await supabase
+        .from('routine_snapshots')
+        .insert(payload)
+        .select('id, owner_id, created_at')
+        .single();
+
+      if (insertError) {
+        console.error('Failed to insert routine snapshot:', insertError);
+        return null;
+      }
+
+      return inserted || null;
+    } catch (e) {
+      console.error('Error creating routine snapshot:', e);
+      return null;
+    }
+  },
+
   async duplicateRoutine(source: EnhancedRoutine): Promise<EnhancedRoutine> {
     const copy: EnhancedRoutine = {
       ...source,

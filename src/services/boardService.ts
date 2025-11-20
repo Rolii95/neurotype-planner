@@ -732,6 +732,48 @@ class BoardService {
       return null;
     }
   }
+
+  // Create a user-owned snapshot of a board template so users can branch without
+  // modifying the original template. The snapshot is stored in `board_snapshots`
+  // and protected by Row Level Security policies (owner-only updates).
+  async createSnapshotFromTemplate(templateId: string, title?: string): Promise<{ id: string; owner_id: string; created_at: string } | null> {
+    try {
+      const { data: template, error } = await supabase
+        .from('board_templates')
+        .select('*')
+        .eq('id', templateId)
+        .single();
+
+      if (error || !template) return null;
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      const snapshotPayload = {
+        template_id: templateId,
+        owner_id: user.id,
+        snapshot_data: template.template_data,
+        title: title || template.name || null,
+        is_public: false,
+      };
+
+      const { data: inserted, error: insertError } = await supabase
+        .from('board_snapshots')
+        .insert(snapshotPayload)
+        .select('id, owner_id, created_at')
+        .single();
+
+      if (insertError) {
+        console.error('Failed to insert board snapshot:', insertError);
+        return null;
+      }
+
+      return inserted || null;
+    } catch (err) {
+      console.error('Error creating snapshot from template:', err);
+      return null;
+    }
+  }
 }
 
 export const boardService = new BoardService();
