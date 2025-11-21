@@ -1,0 +1,398 @@
+{
+  "checkedFiles": [
+    {
+      "file": "001_initial_schema.disabled.sql",
+      "statements": 1
+    },
+    {
+      "file": "001_initial_schema.sql",
+      "statements": 1
+    },
+    {
+      "file": "002_enhanced_routine_steps.sql",
+      "statements": 1
+    },
+    {
+      "file": "002_new_features.sql",
+      "statements": 1
+    },
+    {
+      "file": "003_boards_system.sql",
+      "statements": 1
+    },
+    {
+      "file": "004_board_templates_seed.sql",
+      "statements": 1
+    },
+    {
+      "file": "005_ai_integration.sql",
+      "statements": 1
+    },
+    {
+      "file": "006_missing_tables.sql",
+      "statements": 1
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "statements": 7
+    },
+    {
+      "file": "008_add_task_quadrant.sql",
+      "statements": 2
+    },
+    {
+      "file": "009_medication_health_diet.sql",
+      "statements": 3
+    },
+    {
+      "file": "010_routine_analytics.sql",
+      "statements": 2
+    },
+    {
+      "file": "20251120_add_app_metrics_rejections.sql",
+      "statements": 3
+    },
+    {
+      "file": "20251120_add_app_metrics_table.sql",
+      "statements": 2
+    },
+    {
+      "file": "20251120_add_board_collaborators.sql",
+      "statements": 1
+    },
+    {
+      "file": "20251120_add_run_sql_rpc.sql",
+      "statements": 1
+    },
+    {
+      "file": "20251120_add_template_snapshots.sql",
+      "statements": 1
+    },
+    {
+      "file": "20251120_add_visual_mood_sensory_tables.sql",
+      "statements": 2
+    },
+    {
+      "file": "20251120_all_migrations_gap_fix.sql",
+      "statements": 2
+    },
+    {
+      "file": "20251120_app_metrics_views.sql",
+      "statements": 1
+    },
+    {
+      "file": "20251120_collaboration_delta.sql",
+      "statements": 1
+    },
+    {
+      "file": "RUN_ALL_MIGRATIONS.sql",
+      "statements": 1
+    },
+    {
+      "file": "check_007_needed.sql",
+      "statements": 1
+    },
+    {
+      "file": "check_demo_user.sql",
+      "statements": 1
+    },
+    {
+      "file": "create_demo_user.sql",
+      "statements": 1
+    },
+    {
+      "file": "create_demo_user_COMPLETE.sql",
+      "statements": 2
+    },
+    {
+      "file": "create_demo_user_RUNNABLE.sql",
+      "statements": 2
+    },
+    {
+      "file": "create_demo_user_SIMPLE.sql",
+      "statements": 2
+    },
+    {
+      "file": "delete_demo_user.sql",
+      "statements": 1
+    },
+    {
+      "file": "disable_rls_temp.sql",
+      "statements": 2
+    },
+    {
+      "file": "fix_auth_schema.sql",
+      "statements": 1
+    },
+    {
+      "file": "fix_time_blocks_rls.sql",
+      "statements": 1
+    },
+    {
+      "file": "reload_schema_cache.sql",
+      "statements": 1
+    },
+    {
+      "file": "verify_schema.sql",
+      "statements": 1
+    }
+  ],
+  "missing": [
+    {
+      "file": "001_initial_schema.disabled.sql",
+      "type": "other",
+      "snippet": "-- Backup of `001_initial_schema.sql` (disabled to allow pushing remaining migra"
+    },
+    {
+      "file": "001_initial_schema.sql",
+      "type": "other",
+      "snippet": "-- Disabled initial schema migration.\r\n-- The original migration was partially c"
+    },
+    {
+      "file": "002_enhanced_routine_steps.sql",
+      "type": "other",
+      "snippet": "-- Enhanced Routine Steps Migration for Flex Zones & Transition Support\r\n-- This"
+    },
+    {
+      "file": "002_new_features.sql",
+      "type": "other",
+      "snippet": "-- Migration: Add tables for new features (Pomodoro, Habits, Focus, Energy, Body"
+    },
+    {
+      "file": "003_boards_system.sql",
+      "type": "other",
+      "snippet": "-- Migration: Visual Boards System\r\n-- Created: 2025-11-07\r\n-- Adds visual routi"
+    },
+    {
+      "file": "004_board_templates_seed.sql",
+      "type": "other",
+      "snippet": "-- Board Templates Seed Data\r\n-- Run this after the main board schema migration\r"
+    },
+    {
+      "file": "005_ai_integration.sql",
+      "type": "other",
+      "snippet": "-- =============================================\r\n-- Migration: AI Integration\r\n"
+    },
+    {
+      "file": "006_missing_tables.sql",
+      "type": "other",
+      "snippet": "-- Migration: Add missing tables required by the application\r\n-- Created: 2025-1"
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "type": "other",
+      "snippet": "-- Migration: Schema Updates and Fixes\r\n-- Created: 2025-11-08\r\n-- Purpose: Add "
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "type": "other",
+      "snippet": "-- Add actual_duration if it doesn't exist\r\nDO $$ \r\nBEGIN\r\n    IF NOT EXISTS (\r\n"
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "type": "other",
+      "snippet": "-- Add buffer_time if it doesn't exist\r\nDO $$ \r\nBEGIN\r\n    IF NOT EXISTS (\r\n    "
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "type": "other",
+      "snippet": "-- Add completed_at if it doesn't exist\r\nDO $$ \r\nBEGIN\r\n    IF NOT EXISTS (\r\n   "
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "type": "other",
+      "snippet": "-- =============================================\r\n-- BOARDS TABLE UPDATES\r\n-- =="
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "type": "other",
+      "snippet": "-- Add is_public if it doesn't exist\r\nDO $$ \r\nBEGIN\r\n    IF NOT EXISTS (\r\n      "
+    },
+    {
+      "file": "007_schema_updates.sql",
+      "type": "other",
+      "snippet": "-- =============================================\r\n-- USER_ACTIVITY TABLE UPDATES"
+    },
+    {
+      "file": "008_add_task_quadrant.sql",
+      "type": "other",
+      "snippet": "-- Persist manual Priority Matrix assignment directly on tasks\nbegin;"
+    },
+    {
+      "file": "008_add_task_quadrant.sql",
+      "type": "other",
+      "snippet": "alter table public.tasks\n  add column if not exists quadrant text\n  check (quadr"
+    },
+    {
+      "file": "009_medication_health_diet.sql",
+      "type": "other",
+      "snippet": "-- Medication & Health + Diet schema additions\nbegin;"
+    },
+    {
+      "file": "009_medication_health_diet.sql",
+      "type": "other",
+      "snippet": "-- Enums\ndo $$\nbegin\n  if not exists (select 1 from pg_type where typname = 'rou"
+    },
+    {
+      "file": "009_medication_health_diet.sql",
+      "type": "other",
+      "snippet": "alter type routine_step_type add value if not exists 'medication';\nalter type ro"
+    },
+    {
+      "file": "010_routine_analytics.sql",
+      "type": "other",
+      "snippet": "-- Routine analytics view to drive dashboard hero stats\nDROP VIEW IF EXISTS rout"
+    },
+    {
+      "file": "010_routine_analytics.sql",
+      "type": "view",
+      "name": "routine_analytics_view"
+    },
+    {
+      "file": "20251120_add_app_metrics_rejections.sql",
+      "type": "other",
+      "snippet": "-- Migration: create table for metric ingestion rejections\r\n-- This table stores"
+    },
+    {
+      "file": "20251120_add_app_metrics_rejections.sql",
+      "type": "other",
+      "snippet": "-- Keep this migration idempotent. No RLS is necessary because Edge Function use"
+    },
+    {
+      "file": "20251120_add_app_metrics_table.sql",
+      "type": "other",
+      "snippet": "-- Migration: Add app_metrics table for storing client metrics snapshots\r\n-- Cre"
+    },
+    {
+      "file": "20251120_add_board_collaborators.sql",
+      "type": "other",
+      "snippet": "-- Minimal board_collaborators table to satisfy snapshot policies\r\n-- This is in"
+    },
+    {
+      "file": "20251120_add_run_sql_rpc.sql",
+      "type": "other",
+      "snippet": "-- This migration has been intentionally disabled.\r\n-- The `run_sql` RPC is a de"
+    },
+    {
+      "file": "20251120_add_template_snapshots.sql",
+      "type": "other",
+      "snippet": "-- Create snapshot tables for board and routine templates so users can branch\r\n-"
+    },
+    {
+      "file": "20251120_add_visual_mood_sensory_tables.sql",
+      "type": "other",
+      "snippet": "-- Migration: Add visual_routines, mood_entries, sensory_preferences, user_activ"
+    },
+    {
+      "file": "20251120_add_visual_mood_sensory_tables.sql",
+      "type": "other",
+      "snippet": "-- Visual routines\r\nCREATE TABLE IF NOT EXISTS public.visual_routines (\r\n  id uu"
+    },
+    {
+      "file": "20251120_all_migrations_gap_fix.sql",
+      "type": "other",
+      "snippet": "-- Generated all-migrations gap-fix\n-- Generated at 2025-11-21T01:34:43.222Z\n\n--"
+    },
+    {
+      "file": "20251120_all_migrations_gap_fix.sql",
+      "type": "other",
+      "snippet": "-- Disabled initial schema migration.\r\n-- The original migration was partially c"
+    },
+    {
+      "file": "20251120_app_metrics_views.sql",
+      "type": "other",
+      "snippet": "-- Views for aggregating app_metrics\r\n-- Created: 2025-11-20\r\n-- Create views fo"
+    },
+    {
+      "file": "20251120_collaboration_delta.sql",
+      "type": "other",
+      "snippet": "-- Generated delta: only include statements missing from remote DB\n-- Source: sr"
+    },
+    {
+      "file": "RUN_ALL_MIGRATIONS.sql",
+      "type": "other",
+      "snippet": "-- QUICK MIGRATION RUNNER\r\n-- Copy and paste this entire file into Supabase SQL "
+    },
+    {
+      "file": "check_007_needed.sql",
+      "type": "other",
+      "snippet": "-- Quick check if migration 007 is needed\r\n-- Run this to see what columns are m"
+    },
+    {
+      "file": "check_demo_user.sql",
+      "type": "other",
+      "snippet": "-- Diagnostic: Check Demo User Status\r\n\r\n-- Check if user exists and is confirme"
+    },
+    {
+      "file": "create_demo_user.sql",
+      "type": "other",
+      "snippet": "-- Create Demo User for Neurotype Planner\r\n-- Run this in Supabase SQL Editor to"
+    },
+    {
+      "file": "create_demo_user_COMPLETE.sql",
+      "type": "other",
+      "snippet": "-- Complete Demo User Creation Script\r\n-- This creates BOTH the auth user AND th"
+    },
+    {
+      "file": "create_demo_user_COMPLETE.sql",
+      "type": "other",
+      "snippet": "-- Verify everything was created correctly\r\nSELECT \r\n  au.id,\r\n  au.email,\r\n  au"
+    },
+    {
+      "file": "create_demo_user_RUNNABLE.sql",
+      "type": "other",
+      "snippet": "-- Create Demo User Profile for Neurotype Planner\r\n-- Run this AFTER creating th"
+    },
+    {
+      "file": "create_demo_user_RUNNABLE.sql",
+      "type": "other",
+      "snippet": "-- Verify the profile was created\r\nSELECT \r\n  up.id,\r\n  up.email,\r\n  up.display_"
+    },
+    {
+      "file": "create_demo_user_SIMPLE.sql",
+      "type": "other",
+      "snippet": "-- SIMPLE Demo User Creation\r\n-- This ONLY creates the profile for a user you cr"
+    },
+    {
+      "file": "create_demo_user_SIMPLE.sql",
+      "type": "other",
+      "snippet": "-- Verify\r\nSELECT \r\n  au.id,\r\n  au.email,\r\n  au.email_confirmed_at IS NOT NULL a"
+    },
+    {
+      "file": "delete_demo_user.sql",
+      "type": "other",
+      "snippet": "-- Delete Demo User (cleanup script)\r\n-- Run this first to remove any partially "
+    },
+    {
+      "file": "disable_rls_temp.sql",
+      "type": "other",
+      "snippet": "-- TEMPORARY: Disable RLS on tasks table for testing\r\n-- WARNING: This removes s"
+    },
+    {
+      "file": "disable_rls_temp.sql",
+      "type": "other",
+      "snippet": "-- Verify RLS is disabled\r\nSELECT \r\n  tablename,\r\n  rowsecurity,\r\n  CASE \r\n    W"
+    },
+    {
+      "file": "fix_auth_schema.sql",
+      "type": "other",
+      "snippet": "-- Refresh Supabase Schema Cache and Fix Auth Issues\r\n\r\n-- 1. Notify PostgREST t"
+    },
+    {
+      "file": "fix_time_blocks_rls.sql",
+      "type": "other",
+      "snippet": "-- Fix RLS policies for time_blocks table\r\n-- The original policies have overly "
+    },
+    {
+      "file": "reload_schema_cache.sql",
+      "type": "other",
+      "snippet": "-- Reload Supabase PostgREST Schema Cache\r\n-- Run this if you get \"Could not fin"
+    },
+    {
+      "file": "verify_schema.sql",
+      "type": "other",
+      "snippet": "-- Database Schema Verification Script\r\n-- Run this in Supabase SQL Editor to ch"
+    }
+  ],
+  "skipped": []
+}

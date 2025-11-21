@@ -409,14 +409,32 @@ ALTER TABLE user_presence ENABLE ROW LEVEL SECURITY;
 ALTER TABLE routine_completions ENABLE ROW LEVEL SECURITY;
 
 -- User profiles: Users can read all profiles but only update their own
-CREATE POLICY "Users can view all profiles" ON user_profiles
-  FOR SELECT USING (true);
+DO $$
+BEGIN
+  CREATE POLICY "Users can view all profiles" ON user_profiles
+    FOR SELECT USING (true);
+EXCEPTION WHEN duplicate_object THEN
+  NULL;
+END
+$$ LANGUAGE plpgsql;
 
-CREATE POLICY "Users can update own profile" ON user_profiles
-  FOR UPDATE USING (auth.uid() = id);
+DO $$
+BEGIN
+  CREATE POLICY "Users can update own profile" ON user_profiles
+    FOR UPDATE USING (auth.uid() = id);
+EXCEPTION WHEN duplicate_object THEN
+  NULL;
+END
+$$ LANGUAGE plpgsql;
 
-CREATE POLICY "Users can insert own profile" ON user_profiles
-  FOR INSERT WITH CHECK (auth.uid() = id);
+DO $$
+BEGIN
+  CREATE POLICY "Users can insert own profile" ON user_profiles
+    FOR INSERT WITH CHECK (auth.uid() = id);
+EXCEPTION WHEN duplicate_object THEN
+  NULL;
+END
+$$ LANGUAGE plpgsql;
 
 -- Boards: Users can see boards they own or are collaborators on
 CREATE POLICY "Users can view accessible boards" ON collaborative_boards
