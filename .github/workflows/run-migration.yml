@@ -31,7 +31,11 @@ jobs:
           DB_NAME: ${{ secrets.SUPABASE_DB_NAME }}
         run: |
           set -euo pipefail
-          python scripts/make_idempotent.py
+          # If a manual_review_fixes.sql source is not present, fall back to the pre-generated idempotent SQL
+          if [ ! -f scripts/manual_review_fixes.sql ]; then
+            echo "manual_review_fixes.sql not found; copying manual_review_fixes_idempotent.sql -> manual_review_fixes.sql"
+            cp scripts/manual_review_fixes_idempotent.sql scripts/manual_review_fixes.sql
+          fi
           python scripts/apply_manual_fixes.py --host "$DB_HOST" --port "$DB_PORT" --user "$DB_USER" --password "$DB_PASS" --dbname "$DB_NAME"
 
       - name: List generated artifacts for debugging
