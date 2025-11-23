@@ -1,0 +1,58 @@
+-- Combined subset: failing blocks 6126 and 6293
+
+-- Block 6126
+-- PROPOSED FIX: Reassembled function for failing statement 6126
+
+DO $$
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+		EXECUTE $exec$CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');$exec$;
+	END IF;
+END $$;
+
+-- Enhanced Routine Steps Table
+CREATE TABLE IF NOT EXISTS routine_steps (
+	step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	routine_id UUID NOT NULL REFERENCES routines(id) ON DELETE CASCADE,
+	step_type routine_step_type NOT NULL DEFAULT 'routine',
+	title TEXT NOT NULL,
+	description TEXT,
+	duration INTEGER NOT NULL DEFAULT 0, -- minutes
+	order_index INTEGER NOT NULL,
+  
+	-- Transition Support Properties
+	transition_cue JSONB, -- TransitionCue object
+  
+	-- Flex Zone Specific Properties
+	freeform_data JSONB, -- FreeformData object
+	timer_settings JSONB, -- TimerSettings object
+	is_flexible BOOLEAN DEFAULT false,
+  
+	-- Visual and Accessibility Support
+	visual_cues JSONB, -- color, icon, emoji, backgroundColor, borderColor
+  
+	-- Neurotype Adaptations
+	neurotype_adaptations JSONB, -- ADHD, autism, dyslexia specific settings
+  
+	-- Execution State (runtime)
+	execution_state JSONB, -- status, startedAt, completedAt, actualDuration, notes
+  
+	-- Metadata
+	created_at TIMESTAMPTZ DEFAULT NOW(),
+	updated_at TIMESTAMPTZ DEFAULT NOW(),
+	version INTEGER DEFAULT 1
+);
+
+
+-- Block 6293
+-- PROPOSED FIX: Reassembled function for failing statement 6293
+
+DO $$
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+		EXECUTE $exec$CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');$exec$;
+	END IF;
+END $$;
+
+-- (the rest of block 6293 follows; full block file is available in `scripts/attempted_fix_6293.sql`)
+

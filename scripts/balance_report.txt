@@ -1,0 +1,1375 @@
+Total blocks scanned: 98
+Blocks with problems: 98
+
+-- Block #1 header: Reassembled function for failing statement 1016-- PROPOSED FIX: Reassembled function for failing statement 1016
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 1016-- PROPOSED FIX: Reassembled function for failing statement 1016
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #2 header: Reassembled function for failing statement 6126
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6126
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #3 header: Reassembled function for failing statement 6127
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6127
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #4 header: Reassembled function for failing statement 6128
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6128
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #5 header: Reassembled function for failing statement 6130
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6130
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #6 header: Reassembled function for failing statement 6131
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6131
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #7 header: Reassembled function for failing statement 6132
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6132
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #8 header: Reassembled function for failing statement 6134
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6134
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #9 header: Reassembled function for failing statement 6135
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6135
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #10 header: Reassembled function for failing statement 6137
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6137
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #11 header: Reassembled function for failing statement 6138
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6138
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #12 header: Reassembled function for failing statement 6139
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6139
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #13 header: Reassembled function for failing statement 6140
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6140
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #14 header: Reassembled function for failing statement 6141
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6141
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #15 header: Reassembled function for failing statement 6143
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6143
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #16 header: Reassembled function for failing statement 6144
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6144
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #17 header: Reassembled function for failing statement 6146
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6146
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #18 header: Reassembled function for failing statement 6147
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6147
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #19 header: Reassembled function for failing statement 6148
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6148
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #20 header: Reassembled function for failing statement 6149
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6149
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #21 header: Reassembled function for failing statement 6150
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6150
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #22 header: Reassembled function for failing statement 6151
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6151
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #23 header: Reassembled function for failing statement 6152
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6152
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #24 header: Reassembled function for failing statement 6154
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6154
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #25 header: Reassembled function for failing statement 6155
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6155
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #26 header: Reassembled function for failing statement 6156
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6156
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #27 header: Reassembled function for failing statement 6157
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6157
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #28 header: Reassembled function for failing statement 6158
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6158
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #29 header: Reassembled function for failing statement 6160
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6160
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #30 header: Reassembled function for failing statement 6161
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6161
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #31 header: Reassembled function for failing statement 6163
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6163
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #32 header: Reassembled function for failing statement 6164
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6164
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #33 header: Reassembled function for failing statement 6165
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6165
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #34 header: Reassembled function for failing statement 6169
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6169
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #35 header: Reassembled function for failing statement 6170
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6170
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #36 header: Reassembled function for failing statement 6172
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6172
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #37 header: Reassembled function for failing statement 6174
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6174
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #38 header: Reassembled function for failing statement 6175
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6175
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #39 header: Reassembled function for failing statement 6176
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6176
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #40 header: Reassembled function for failing statement 6177
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6177
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #41 header: Reassembled function for failing statement 6178
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6178
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #42 header: Reassembled function for failing statement 6181
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6181
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #43 header: Reassembled function for failing statement 6182
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6182
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #44 header: Reassembled function for failing statement 6183
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6183
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #45 header: Reassembled function for failing statement 6184
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6184
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #46 header: Reassembled function for failing statement 6185
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6185
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #47 header: Reassembled function for failing statement 6186
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6186
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #48 header: Reassembled function for failing statement 6187
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6187
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #49 header: Reassembled function for failing statement 6188
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6188
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #50 header: Reassembled function for failing statement 6190
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6190
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #51 header: Reassembled function for failing statement 6191
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6191
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #52 header: Reassembled function for failing statement 6193
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6193
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #53 header: Reassembled function for failing statement 6194
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6194
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #54 header: Reassembled function for failing statement 6195
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6195
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #55 header: Reassembled function for failing statement 6196
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6196
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #56 header: Reassembled function for failing statement 6197
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6197
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #57 header: Reassembled function for failing statement 6198
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6198
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #58 header: Reassembled function for failing statement 6199
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6199
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #59 header: Reassembled function for failing statement 6200
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6200
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #60 header: Reassembled function for failing statement 6201
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6201
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #61 header: Reassembled function for failing statement 6203
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6203
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #62 header: Reassembled function for failing statement 6204
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6204
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #63 header: Reassembled function for failing statement 6206
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6206
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #64 header: Reassembled function for failing statement 6207
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6207
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #65 header: Reassembled function for failing statement 6208
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6208
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #66 header: Reassembled function for failing statement 6220
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6220
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #67 header: Reassembled function for failing statement 6221
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6221
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #68 header: Reassembled function for failing statement 6222
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6222
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #69 header: Reassembled function for failing statement 6223
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6223
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #70 header: Reassembled function for failing statement 6224
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6224
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #71 header: Reassembled function for failing statement 6225
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6225
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #72 header: Reassembled function for failing statement 6226
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6226
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #73 header: Reassembled function for failing statement 6227
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6227
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #74 header: Reassembled function for failing statement 6228
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6228
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #75 header: Reassembled function for failing statement 6229
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6229
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #76 header: Reassembled function for failing statement 6230
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6230
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #77 header: Reassembled function for failing statement 6231
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6231
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #78 header: Reassembled function for failing statement 6232
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6232
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #79 header: Reassembled function for failing statement 6233
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6233
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #80 header: Reassembled function for failing statement 6234
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6234
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #81 header: Reassembled function for failing statement 6235
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6235
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #82 header: Reassembled function for failing statement 6236
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6236
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #83 header: Reassembled function for failing statement 6237
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6237
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #84 header: Reassembled function for failing statement 6238
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6238
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #85 header: Reassembled function for failing statement 6239
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6239
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #86 header: Reassembled function for failing statement 6240
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6240
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #87 header: Reassembled function for failing statement 6241
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6241
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #88 header: Reassembled function for failing statement 6242
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6242
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #89 header: Reassembled function for failing statement 6244
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6244
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #90 header: Reassembled function for failing statement 6245
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6245
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #91 header: Reassembled function for failing statement 6246
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6246
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #92 header: Reassembled function for failing statement 6247
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6247
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #93 header: Reassembled function for failing statement 6248
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6248
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #94 header: Reassembled function for failing statement 6249
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6249
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #95 header: Reassembled function for failing statement 6250
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6250
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #96 header: Reassembled function for failing statement 6252
+problems: ['BEGIN_END_mismatch=29:63']
+tag_count_total: 112 odd_tags: {}
+BEGIN: 29 END: 63
+snippet:
+Reassembled function for failing statement 6252
+DO $wrap$
+BEGIN
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+---
+-- Block #97 header: Reassembled function for failing statement 6293
+problems: ['BEGIN_END_mismatch=30:36']
+tag_count_total: 116 odd_tags: {}
+BEGIN: 30 END: 36
+snippet:
+Reassembled function for failing statement 6293
+DO $wrap$
+BEGIN
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'autism_routine_rigidity') THEN
+    EXECUTE $$ CREATE TYPE autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict'); $$;
+---
+-- Block #98 header: Reassembled function for failing statement 6722
+problems: ["unbalanced_dollar_tags={'$$': 33157}", 'BEGIN_END_mismatch=9312:22059']
+tag_count_total: 34947 odd_tags: {'$$': 33157}
+BEGIN: 9312 END: 22059
+snippet:
+Reassembled function for failing statement 6722
+
+CREATE TYPE IF NOT EXISTS autism_routine_rigidity AS ENUM ('flexible', 'structured', 'strict');
+-- Enhanced Routine Steps Table
+CREATE TABIF IF NOT EXISTS routine_steps (
+  step_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  routine_id UUID NOT NULL REFERENCES routines(id) ON DELETE CASCADE,
+  step_type routine_step_type NOT NULL DEFAULT 'routine',
+---
