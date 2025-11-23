@@ -1,0 +1,6 @@
+Log file: C:\Users\lopez\Documents\Neurotype Planner\scripts\fix_rerun_log.txt
+Unique proposed blocks found: 97
+Errors: 0
+Successes: 97
+
+Top error messages (count):

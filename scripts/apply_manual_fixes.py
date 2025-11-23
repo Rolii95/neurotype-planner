@@ -31,8 +31,19 @@ parser.add_argument('--port', type=int, default=5432)
 parser.add_argument('--user', required=True)
 parser.add_argument('--password', required=True)
 parser.add_argument('--dbname', required=True)
+parser.add_argument('--connect-timeout', type=int, default=10, help='TCP connect timeout in seconds')
+parser.add_argument('--statement-timeout', type=int, default=30000, help='Per-statement timeout in milliseconds (SET statement_timeout)')
 parser.add_argument('--limit', type=int, default=0, help='Limit number of blocks to apply (0 = all)')
 args = parser.parse_args()
+
+# Safety: avoid accidental use of the generic `postgres` superuser when a
+# Supabase pooler username is expected. Require an explicit pooler-mode
+# username (e.g. 'postgres.<token>') and fail early to avoid many noisy
+# authentication failures and partial application attempts.
+user_lower = (args.user or '').lower()
+if user_lower == 'postgres':
+    print("ERROR: Refusing to run with username 'postgres'. Please supply the pooler-mode username (e.g. 'postgres.<id>').")
+    raise SystemExit(2)
 
 text = INFILE.read_text(encoding='utf-8')
 # Split into blocks starting with -- PROPOSED FIX
@@ -51,34 +62,70 @@ if not entries:
 if args.limit > 0:
     entries = entries[:args.limit]
 
-LOGFILE.write_text('')
-
 conn = None
-for stmt_idx, (orig_idx, block) in enumerate(entries, start=1):
-    header = f"=== Block {stmt_idx} (failing stmt {orig_idx}) | {datetime.utcnow().isoformat()}Z ===\n"
-    LOGFILE.write_text(header, encoding='utf-8', append=True) if False else None
-
-# We'll open/append using with open
 with open(LOGFILE, 'a', encoding='utf-8') as logf:
     logf.write(f"Run started: {datetime.utcnow().isoformat()}Z\n")
     logf.write(f"Found {len(entries)} proposed fix blocks.\n\n")
 
     for seq, (orig_idx, block) in enumerate(entries, start=1):
-        logf.write(f"--- Block {seq} (failing stmt {orig_idx}) ---\n")
+        header = f"--- Block {seq} (failing stmt {orig_idx}) ---\n"
+        logf.write(header)
         logf.write(f"Timestamp: {datetime.utcnow().isoformat()}Z\n")
         # Save SQL to separate file for traceability
         block_file = ROOT.joinpath(f'attempted_fix_{orig_idx}.sql')
         block_file.write_text(block + '\n', encoding='utf-8')
         logf.write(f"Wrote attempted SQL to: {block_file}\n")
 
+        # If the block appears to contain top-level PL/pgSQL IF/END IF
+        # fragments but does not already include a DO/$$ plpgsql wrapper
+        # or a CREATE FUNCTION, wrap it in a DO block so the IFs parse.
+        def needs_do_wrap(b: str) -> bool:
+            # Wrap blocks containing PL/pgSQL IF/END IF fragments so they parse.
+            # Avoid wrapping full CREATE FUNCTION blocks.
+            has_if = bool(re.search(r"\bIF\b", b, re.IGNORECASE)) or "END IF;" in b
+            if not has_if:
+                return False
+            # If this looks like a full CREATE FUNCTION, do not wrap
+            if re.search(r"CREATE\s+FUNCTION", b, re.IGNORECASE):
+                return False
+            # If the block already contains a DO $$ ... $$ or explicit PL/pgSQL LANGUAGE
+            # then it's already a plpgsql block and should not be wrapped again.
+            if re.search(r"\bDO\s+\$\w*\$", b, re.IGNORECASE) or re.search(r"LANGUAGE\s+plpgsql", b, re.IGNORECASE):
+                return False
+            return True
+
+        exec_block = block
+        if needs_do_wrap(block):
+            exec_block = f"DO $wrap$\nBEGIN\n{block}\nEND\n$wrap$;"
+            logf.write("Wrapped block in DO $wrap$ BEGIN/END to allow PL/pgSQL IF parsing.\n")
+
         try:
-            conn = psycopg2.connect(host=args.host, port=args.port, user=args.user, password=args.password, dbname=args.dbname)
+            conn = psycopg2.connect(
+                host=args.host,
+                port=args.port,
+                user=args.user,
+                password=args.password,
+                dbname=args.dbname,
+                connect_timeout=args.connect_timeout,
+            )
             conn.autocommit = True
             cur = conn.cursor()
-            cur.execute(block)
+            # enforce a per-statement timeout inside Postgres so long-running SQL won't hang
+            try:
+                cur.execute(f"SET statement_timeout = {int(args.statement_timeout)}")
+            except Exception:
+                # best-effort; ignore if server doesn't accept the change
+                pass
+            cur.execute(exec_block)
             logf.write("RESULT: SUCCESS\n\n")
-            cur.close()
-            conn.close()
+            try:
+                cur.close()
+            except Exception:
+                pass
+            try:
+                conn.close()
+            except Exception:
+                pass
         except Exception as exc:
             err = str(exc).replace('\n', ' | ')
             logf.write(f"RESULT: ERROR | {err}\n\n")
